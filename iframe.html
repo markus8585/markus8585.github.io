@@ -34,7 +34,9 @@ iframe {
 <script>
 var iframe = document.createElement('iframe');
 iframe.style.display = "block";
-iframe.src = "http://staging3.resultsbydesign.com/iframe.html?" + Math.random();
+var urlTest = Math.random();
+iframe.src = "http://staging3.resultsbydesign.com/iframe.html?" + urlTest;
+console.log( urlTest );
 document.body.appendChild(iframe);
 </script>
  
