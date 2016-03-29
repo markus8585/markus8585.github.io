@@ -36,7 +36,8 @@ var iframe = document.createElement('iframe');
 iframe.style.display = "block";
 var urlTest = Math.random();
 iframe.src = "http://staging3.resultsbydesign.com/iframe.html?" + urlTest;
-document.getElementById("pageid").innerHTML = urlTest;
+//document.getElementById("pageid").innerHTML = urlTest;
+document.write("<h2>"+urlTest+"</h2>");
 document.body.appendChild(iframe);
 </script>
  
