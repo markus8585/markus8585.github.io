@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title>DBS 3.0</title> 
+ 
+<style type="text/css"> 
+
+* {
+	padding: 0px;
+	margin: 0px;
+}
+html, body {
+	text-align:center;
+	height: 100%;
+	width: 100%;
+}
+img {
+	max-width: 100%;
+}
+
+iframe {
+	height: 100%;
+	width: 100%;
+}
+	
+</style> 
+ 
+</head> 
+ 
+<body> 
+	TEST
+<!-- <iframe src="http://staging3.resultsbydesign.com/iframe.html" height="900px" width="100%"></iframe> -->
+<script>
+var iframe = document.createElement('iframe');
+iframe.style.display = "block";
+iframe.src = "http://staging3.resultsbydesign.com/iframe.html?"+Math.floor((Math.random() * 5) + 1);
+document.body.appendChild(iframe);
+</script>
+ 
+</body> 
+</html> 
