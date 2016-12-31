@@ -10,25 +10,43 @@
     	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     	<script src="mermaid.min.js" type="text/javascript"></script>
     	<script>mermaid.initialize({startOnLoad:true});</script>
+        <script>
+        var daytime = {
+            day: "Day",
+            night: "Night",
+            afternoon: "Afternoon",
+            evening: "Evening"
+        }
+        var weathers = {
+            'tree-1-a1': "It was a perfectly normal day, just like any other.",
+            rain: ""
+        };
+        var item = items[Math.floor(Math.random()*items.length)];
+        </script>
 	</head>
     <body>
         <div class="mermaid col-md-6">
             %% Subgraph example
             graph TB
-            subgraph one <span>data-test</span>
+            subgraph tree-1
             a1-->a2
             end
-            subgraph two
+            subgraph tree-2
             b1-->b2
             end
-            subgraph three
+            subgraph tree-3
             c1-->c2
             end
             c1-->a2
         </div>
 
         <div class="col-md-6">
-
+            <div class="">
+                The Frog King and the Thief
+            </div>
+            <div class="">
+                The Crab's Broken Leg
+            </div>
         </div>
 	  
     </body>
