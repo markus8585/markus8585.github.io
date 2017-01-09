@@ -1,8 +1,7 @@
-var xScale = 1;
 var Entities = {
     init: function (data) {
         var background = {
-            sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35*xScale, 256*xScale, 200*xScale),
+            sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
             x: 0,
             y: 0,
             w: 768,
@@ -12,7 +11,7 @@ var Entities = {
         // var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 64, 64);
         var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 63);
 
-        var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144*xScale, 168*xScale);
+        var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
 
         var score = new Entities.helpers.Score(290, 70);
 
@@ -58,32 +57,32 @@ var Entities = {
             var self = this;
 
             this.jumpSound = new Audio("audio/lumberjack_jump.mp3");
-            this.sprite = new Entities.helpers.Sprite(img, 260*xScale, 0*xScale, 16*xScale, 21*xScale);
+            this.sprite = new Entities.helpers.Sprite(img, 260 * xScale, 0 * xScale, 16 * xScale, 21 * xScale);
             this.spriteAnimations = {
                 walkRight: {
-                    frames: [new Entities.helpers.Sprite(img, 260*xScale, 0*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 22*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 44*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 66*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 88*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 110*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 260*xScale, 132*xScale, 16*xScale, 21*xScale)],
+                    frames: [new Entities.helpers.Sprite(img, 260 * xScale, 0 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 22 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 44 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 66 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 88 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 110 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 260 * xScale, 132 * xScale, 16 * xScale, 21 * xScale)],
                     currentFrame: 0
                 },
                 walkLeft: {
-                    frames: [new Entities.helpers.Sprite(img, 277*xScale, 0*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 22*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 44*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 66*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 88*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 110*xScale, 16*xScale, 21*xScale),
-                            new Entities.helpers.Sprite(img, 277*xScale, 132*xScale, 16*xScale, 21*xScale)],
+                    frames: [new Entities.helpers.Sprite(img, 277 * xScale, 0 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 22 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 44 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 66 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 88 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 110 * xScale, 16 * xScale, 21 * xScale),
+                            new Entities.helpers.Sprite(img, 277 * xScale, 132 * xScale, 16 * xScale, 21 * xScale)],
                     currentFrame: 0
                 },
-                standRight: new Entities.helpers.Sprite(img, 260*xScale, 0*xScale, 16*xScale, 21*xScale),
-                standLeft: new Entities.helpers.Sprite(img, 277*xScale, 0*xScale, 16*xScale, 21*xScale),
-                jumpLeft: new Entities.helpers.Sprite(img, 277*xScale, 132*xScale, 16*xScale, 21*xScale),
-                jumpRight: new Entities.helpers.Sprite(img, 260*xScale, 132*xScale, 16*xScale, 21*xScale)
+                standRight: new Entities.helpers.Sprite(img, 260 * xScale, 0 * xScale, 16 * xScale, 21 * xScale),
+                standLeft: new Entities.helpers.Sprite(img, 277 * xScale, 0 * xScale, 16 * xScale, 21 * xScale),
+                jumpLeft: new Entities.helpers.Sprite(img, 277 * xScale, 132 * xScale, 16 * xScale, 21 * xScale),
+                jumpRight: new Entities.helpers.Sprite(img, 260 * xScale, 132 * xScale, 16 * xScale, 21 * xScale)
             };
             this.states = {
                 jumping: {
@@ -162,8 +161,8 @@ var Entities = {
             this.sprite = new Entities.helpers.Sprite(img, 99, 0, 10, 14);
             this.spriteAnimations = {
                 spin: {
-                    frames: [new Entities.helpers.Sprite(img, 99*xScale, 0*xScale, 10*xScale, 14*xScale), new Entities.helpers.Sprite(img, 115*xScale, 0*xScale, 10*xScale, 14*xScale),
-                             new Entities.helpers.Sprite(img, 131*xScale, 0*xScale, 10*xScale, 14*xScale), new Entities.helpers.Sprite(img, 147*xScale, 0*xScale, 10*xScale, 14*xScale)],
+                    frames: [new Entities.helpers.Sprite(img, 99 * xScale, 0 * xScale, 10 * xScale, 14 * xScale), new Entities.helpers.Sprite(img, 115 * xScale, 0 * xScale, 10 * xScale, 14 * xScale),
+                             new Entities.helpers.Sprite(img, 131 * xScale, 0 * xScale, 10 * xScale, 14 * xScale), new Entities.helpers.Sprite(img, 147 * xScale, 0 * xScale, 10 * xScale, 14 * xScale)],
                     currentFrame: 0
                 }
             };

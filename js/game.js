@@ -1,3 +1,6 @@
+// var xScale = 1;
+var xScale = 3;
+
 var Game = {
     init: function () {
         var bgCanvas = document.getElementById("bg-canvas");
@@ -14,10 +17,11 @@ var Game = {
         backgroundMusic.loop = true;
 
         var spriteSheet = new Image();
-        var xScale = 1;
-        // var xScale = 3;
-        // spriteSheet.src = "img/sprite_sheet_x3.png";
-        spriteSheet.src = "img/sprite_sheet.png";
+        if(xScale > 1){
+            spriteSheet.src = "img/sprite_sheet_x3.png";
+        }else{
+            spriteSheet.src = "img/sprite_sheet.png";
+        }
 
         spriteSheet.addEventListener("load", function () {
             var spriteSheet = this;
