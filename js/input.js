@@ -40,6 +40,24 @@ var Input = {
         //Up Arrow
         if (Input.helpers.isPressed(38)) {
             jack.currentState = jack.states.jumping;
+            if(jack.exitReady){
+                console.log('EXIT');
+                if(data.location == "initial"){
+                    Entities.locations.outdoorDJs(data);
+                    data.location = "inside";
+                }else{
+                    Entities.locations.djs(data);
+                    data.location = "initial";
+                    // Entities.init(data);
+                }
+                Render.init(data);
+            }
+            // console.log(data.entities);
+        }
+
+        //Down Arrow
+        if (Input.helpers.isPressed(40)) {
+            jack.currentState = jack.states.crouching;
         }
     },
 

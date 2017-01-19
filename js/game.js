@@ -1,5 +1,6 @@
 // var xScale = 1;
 var xScale = 3;
+var lastLoop = Date.now();
 
 var Game = {
     init: function () {
@@ -29,7 +30,8 @@ var Game = {
             var data = {
                 animationFrame: 0,
                 spriteSheet: spriteSheet,
-                canvas: canvas
+                canvas: canvas,
+                location: "initial"
             };
 
             backgroundMusic.play();
@@ -46,6 +48,12 @@ var Game = {
             Game.input(data);
             Game.update(data);
             Game.render(data);
+
+            var thisLoop = Date.now();
+            var fps = 1000 / (thisLoop - lastLoop);
+            lastLoop = thisLoop;
+
+            document.getElementById("content").innerHTML = fps;
 
             data.animationFrame++;
 

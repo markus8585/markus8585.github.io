@@ -21,11 +21,16 @@ var Physics = {
             entityCollisionCheck(wall);
         });
 
+        data.entities.barsArray.forEach(function (bar) {
+            entityCollisionCheck(bar);
+        });
+
         data.entities.coinsArray.forEach(function (coin) {
             entityCollisionCheck(coin);
         });
 
-        entityCollisionCheck(data.entities.exitPipe);
+        // entityCollisionCheck(data.entities.exitPipe);
+        entityCollisionCheck(data.entities.exitDoor);
     },
 
     handleCollision: function (data, entity) {
@@ -48,6 +53,20 @@ var Physics = {
                 jack.currentState = jack.states.standing
                 jack.y = entity.y - jack.h;
                 jack.velY = 0;
+            }
+        }
+
+        if (entity.type === "bar") {
+            // console.log('entity.x:'+entity.x+ ' entity.y:'+entity.y+' jack.x:'+jack.x+' jack.y:'+jack.y);
+            //Top of Bar Collision
+            if (
+                (jack.y+jack.h-30) < entity.y && (jack.x + jack.w) > entity.x + 10 &&
+                jack.x < (entity.x + entity.w) - 10 && 
+                jack.velY >= 0
+                ) {
+                    jack.currentState = jack.states.standing
+                    jack.y = entity.y - jack.h;
+                    jack.velY = 0;
             }
         }
 
@@ -86,6 +105,39 @@ var Physics = {
                 jack.y = entity.y - jack.h;
                 jack.velY = 0;
             }
+        }
+
+        if (entity.type === "exitDoor") {
+
+            // console.log( jack.x +' | '+ entity.x +' | '+ jack.y +' | '+ entity.y +' | '+ entity.w);
+            // console.log( (jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w) );
+
+
+            if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
+                jack.exitReady = true;
+                if (jack.velY < 0) {
+                    //IGNORE JUMP GO EXIT IN INPUT
+
+                    // // jack.x = 305;
+                    // // // jack.y = 0;
+                    // // jack.y = 528 - 63; // Attach to ground
+                    // // jack.velY = 23; //Cancel out jump velocity
+
+
+                }
+            }else{
+             if(jack.exitReady){ jack.exitReady = false; }
+         }
+
+            //Top of Door Collision
+            if (jack.y < entity.y && (jack.x + jack.w) > entity.x + 10 &&
+                jack.x < (entity.x + entity.w) - 10 && jack.velY >= 0) {
+                jack.currentState = jack.states.standing
+                jack.y = entity.y - jack.h;
+                jack.velY = 0;
+            }
+        }else{
+            if(jack.exitReady){ jack.exitReady = false; }
         }
     },
 
