@@ -40,24 +40,46 @@ var Input = {
         //Up Arrow
         if (Input.helpers.isPressed(38)) {
             jack.currentState = jack.states.jumping;
+            
             if(jack.exitReady){
-                console.log('EXIT');
-                if(data.location == "initial"){
-                    Entities.locations.outdoorDJs(data);
-                    data.location = "inside";
+                console.log('EXIT to: ' + data.location);
+
+                if(data.location == "outdoorDJs"){
+
+                    if (Entities.locations.outdoorDJs.init){
+                        console.log('DJS OUTDOOR INIT 0a');
+                        Entities.locations.outdoorDJs.init(data);
+                        // Entities.locations.outdoorDJs.init = false;
+                    }else{
+                        console.log('DJS OUTDOOR INIT 0b');
+                        Entities.locations.outdoorDJs.entities(data);
+                    }
+                    data.location = "djs";
+
                 }else{
-                    Entities.locations.djs(data);
-                    data.location = "initial";
-                    // Entities.init(data);
+
+                    if (Entities.locations.djs.init){
+                        console.log('DJS INDOOR INIT 0a');
+                        Entities.locations.djs.init(data);
+                        // Entities.locations.djs.init = false;
+                    }else{
+                        console.log('DJS INDOOR INIT 0b');
+                        Entities.locations.djs.entities(data);
+                    }
+                    data.location = "outdoorDJs";
                 }
                 Render.init(data);
             }
-            // console.log(data.entities);
         }
 
         //Down Arrow
         if (Input.helpers.isPressed(40)) {
             jack.currentState = jack.states.crouching;
+        }
+
+        //Spacebar
+        if (Input.helpers.isPressed(32)) {
+            Game.movie(data);
         }
     },
 

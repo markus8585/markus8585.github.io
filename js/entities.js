@@ -1,5 +1,9 @@
+
 var Entities = {
     init: function (data) {
+
+        console.log('Entities Init');
+        
         var background = {
             sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
             x: 0,
@@ -61,8 +65,8 @@ var Entities = {
         }
 
         for (var i = 0, len = passablebars.length; i < len; i++) {
-            data.entities.barsArray.push( 
-                new Entities.helpers.Bar( 
+            data.entities.barsArray.push(
+                new Entities.helpers.Bar(
                     //x,y,w,h
                     passablebars[i][0], 
                     passablebars[i][1], 
@@ -73,8 +77,8 @@ var Entities = {
         }
 
         for (var i = 0, len = coinLocations.length; i < len; i++) {
-            data.entities.coinsArray.push( 
-                new Entities.helpers.Coin( 
+            data.entities.coinsArray.push(
+                new Entities.helpers.Coin(
                     // sprite,x,y,w,h
                     data.spriteSheet,
                     coinLocations[i][0], 
@@ -84,179 +88,224 @@ var Entities = {
                 ) 
             );
         }
+
+        Entities.locations[data.location].init(data);
+        
     },
 
     locations: {
-        outdoorDJs: function (data) {
-            var background = {
-                sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 235 * xScale, 256 * xScale, 200 * xScale),
-                x: 0,
-                y: 0,
-                w: 768,
-                h: 600
-            };
+        outdoorDJs: {
+            init: function (data) {
+                console.log('DJS OUTDOOR INIT 1');
+                var background = {
+                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 235 * xScale, 256 * xScale, 200 * xScale),
+                    x: 0,
+                    y: 0,
+                    w: 768,
+                    h: 600
+                };
 
-            var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 64);
-            // var jack = new Entities.helpers.Jack(data.spriteSheet, 305, 528 - 63, 48, 63);
+                var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 64);
+                // var jack = new Entities.helpers.Jack(data.spriteSheet, 305, 528 - 63, 48, 63);
 
-            //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
-            
-            var exitDoor = new Entities.helpers.ExitDoor(305, 152*3, 17*3, 24*3);
-
-            var score = data.entities.score;
-
-            var modal = new Entities.helpers.Modal(290, 100);
-
-            var wallLocations = [
-                                [0, 0, 48, 600],
-                                [0, 528, 768, 72],
-                                [239*3, 0, 17*3, 600],
-                                //[192, 384, 336, 216],
-                                //[726, 0, 42, 600]
-                                ];
-            var passablebars = [
+                //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
                 
-            ];
+                var exitDoor = new Entities.helpers.ExitDoor(305, 152*3, 17*3, 24*3);
 
-            var coinLocations = [];
+                var score = data.entities.score;
 
-            data.entities = {};
+                var modal = new Entities.helpers.Modal(290, 100);
 
-            data.entities.background = background;
-            data.entities.score = score;
-            data.entities.modal = modal;
-            data.entities.jack = jack;
-            data.entities.exitDoor = exitDoor;
-            //data.entities.exitPipe = exitPipe;
-            data.entities.wallsArray = [];
-            data.entities.barsArray = [];
-            data.entities.coinsArray = [];
+                var wallLocations = [
+                                    [-55, 0, 48, 600],
+                                    [0, 528, 768, 72],
+                                    [239*3+7+48, 0, 17*3, 600],
+                                    //[192, 384, 336, 216],
+                                    //[726, 0, 42, 600]
+                                    ];
+                var passablebars = [
+                    
+                ];
+
+                var coinLocations = [];
+
+                data.entities = {};
+
+                data.entities.background = background;
+                data.entities.score = score;
+                data.entities.modal = modal;
+                data.entities.jack = jack;
+                data.entities.exitDoor = exitDoor;
+                //data.entities.exitPipe = exitPipe;
+                data.entities.wallsArray = [];
+                data.entities.barsArray = [];
+                data.entities.coinsArray = [];
 
 
-            for (var i = 0, len = wallLocations.length; i < len; i++) {
-                data.entities.wallsArray.push( 
-                    new Entities.helpers.Wall( 
-                        //x,y,w,h
-                        wallLocations[i][0], 
-                        wallLocations[i][1], 
-                        wallLocations[i][2], 
-                        wallLocations[i][3] 
-                    ) 
-                );
-            }
+                for (var i = 0, len = wallLocations.length; i < len; i++) {
+                    data.entities.wallsArray.push( 
+                        new Entities.helpers.Wall( 
+                            //x,y,w,h
+                            wallLocations[i][0], 
+                            wallLocations[i][1], 
+                            wallLocations[i][2], 
+                            wallLocations[i][3] 
+                        ) 
+                    );
+                }
 
-            for (var i = 0, len = passablebars.length; i < len; i++) {
-                data.entities.barsArray.push( 
-                    new Entities.helpers.Bar( 
-                        //x,y,w,h
-                        passablebars[i][0], 
-                        passablebars[i][1], 
-                        passablebars[i][2], 
-                        passablebars[i][3] 
-                    ) 
-                );
-            }
+                for (var i = 0, len = passablebars.length; i < len; i++) {
+                    data.entities.barsArray.push( 
+                        new Entities.helpers.Bar( 
+                            //x,y,w,h
+                            passablebars[i][0], 
+                            passablebars[i][1], 
+                            passablebars[i][2], 
+                            passablebars[i][3] 
+                        ) 
+                    );
+                }
 
-            for (var i = 0, len = coinLocations.length; i < len; i++) {
-                data.entities.coinsArray.push( 
-                    new Entities.helpers.Coin( 
-                        // sprite,x,y,w,h
-                        data.spriteSheet,
-                        coinLocations[i][0], 
-                        coinLocations[i][1], 
-                        30, 
-                        42 
-                    ) 
-                );
-            }
+                for (var i = 0, len = coinLocations.length; i < len; i++) {
+                    data.entities.coinsArray.push( 
+                        new Entities.helpers.Coin( 
+                            // sprite,x,y,w,h
+                            data.spriteSheet,
+                            coinLocations[i][0], 
+                            coinLocations[i][1], 
+                            30, 
+                            42 
+                        ) 
+                    );
+                }
+            },
+            entities: function (data) {
+                console.log('DJS OUTDOOR INIT 2');
+                Entities.locations.outdoorDJs.init(data);
+            },
         },
-        djs: function (data) {
-            var background = {
-                sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
-                x: 0,
-                y: 0,
-                w: 768,
-                h: 600
-            };
 
-            // var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 64, 64);
-            var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 63);
+        djs: {
+            init: function (data) {
+                console.log('DJS INIT');
+                // console.log(data);
+                 var background = {
+                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
+                    x: 0,
+                    y: 0,
+                    w: 768,
+                    h: 600
+                };
 
-            //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
-            
-            var exitDoor = new Entities.helpers.ExitDoor(201*3, 146*3, 17*3, 30*3);
+                // var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 64, 64);
+                var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 63);
 
-            var score = data.entities.score;
+                //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
+                
+                var exitDoor = new Entities.helpers.ExitDoor(201*3, 146*3, 17*3, 30*3);
 
-            var modal = new Entities.helpers.Modal(290, 100);
+                // var score = new Entities.helpers.Score(290, 70);
 
-            var wallLocations = [
-                                [0, 0, 48, 600],
-                                [0, 528, 768, 72],
-                                [239*3, 0, 17*3, 600],
-                                //[192, 384, 336, 216],
-                                //[726, 0, 42, 600]
-                                ];
-            var passablebars = [
-                [40*3, 161*3, 50*3, 6],
-                [103*3, 166*3, 40*3, 6]
-            ];
+                var modal = new Entities.helpers.Modal(290, 100);
 
-            var coinLocations = [[249, 150], [297, 150], [345, 150], [393, 150], [441, 150],
-                                 [201, 246], [249, 246], [297, 246], [345, 246], [393, 246], [441, 246], [489, 246],
-                                 [201, 342], [249, 342], [297, 342], [345, 342], [393, 342], [441, 342], [489, 342]]
-
-            var coinLocations = [];
-            var coinsArray = data.entities.coinsArray;
-            data.entities = {};
-
-            data.entities.background = background;
-            data.entities.score = score;
-            data.entities.modal = modal;
-            data.entities.jack = jack;
-            data.entities.exitDoor = exitDoor;
-            //data.entities.exitPipe = exitPipe;
-            data.entities.wallsArray = [];
-            data.entities.barsArray = [];
-            data.entities.coinsArray = coinsArray;
+                var wallLocations = [
+                                    [0, 0, 48, 600],
+                                    [0, 528, 768, 72],
+                                    [239*3, 0, 17*3, 600],
+                                    //[192, 384, 336, 216],
+                                    //[726, 0, 42, 600]
+                                    ];
+                var passablebars = [
+                    [40*3, 161*3, 50*3, 6],
+                    [103*3, 166*3, 40*3, 6]
+                ];
 
 
-            for (var i = 0, len = wallLocations.length; i < len; i++) {
-                data.entities.wallsArray.push( 
-                    new Entities.helpers.Wall( 
-                        //x,y,w,h
-                        wallLocations[i][0], 
-                        wallLocations[i][1], 
-                        wallLocations[i][2], 
-                        wallLocations[i][3] 
-                    ) 
-                );
-            }
+                var coinLocations = [[249, 150], [297, 150], [345, 150], [393, 150], [441, 150],
+                                     [201, 246], [249, 246], [297, 246], [345, 246], [393, 246], [441, 246], [489, 246],
+                                     [201, 342], [249, 342], [297, 342], [345, 342], [393, 342], [441, 342], [489, 342]]
 
-            for (var i = 0, len = passablebars.length; i < len; i++) {
-                data.entities.barsArray.push( 
-                    new Entities.helpers.Bar( 
-                        //x,y,w,h
-                        passablebars[i][0], 
-                        passablebars[i][1], 
-                        passablebars[i][2], 
-                        passablebars[i][3] 
-                    ) 
-                );
-            }
+                // data.entities = {};
 
-            // for (var i = 0, len = coinLocations.length; i < len; i++) {
-            //     data.entities.coinsArray.push( 
-            //         new Entities.helpers.Coin( 
-            //             // sprite,x,y,w,h
-            //             data.spriteSheet,
-            //             coinLocations[i][0], 
-            //             coinLocations[i][1], 
-            //             30, 
-            //             42 
-            //         ) 
-            //     );
-            // }
+                data.entities.background = background;
+                // data.entities.score = score;
+                data.entities.modal = modal;
+                data.entities.jack = jack;
+                data.entities.exitDoor = exitDoor;
+                //data.entities.exitPipe = exitPipe;
+                data.entities.wallsArray = [];
+                data.entities.barsArray = [];
+                data.entities.coinsArray = [];
+
+                // console.log(data);
+                // console.log(data.entities);
+
+
+
+                for (var i = 0, len = wallLocations.length; i < len; i++) {
+                    data.entities.wallsArray.push( 
+                        new Entities.helpers.Wall( 
+                            //x,y,w,h
+                            wallLocations[i][0], 
+                            wallLocations[i][1], 
+                            wallLocations[i][2], 
+                            wallLocations[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = passablebars.length; i < len; i++) {
+                    data.entities.barsArray.push(
+                        new Entities.helpers.Bar(
+                            //x,y,w,h
+                            passablebars[i][0], 
+                            passablebars[i][1], 
+                            passablebars[i][2], 
+                            passablebars[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = coinLocations.length; i < len; i++) {
+                    data.entities.coinsArray.push(
+                        new Entities.helpers.Coin(
+                            // sprite,x,y,w,h
+                            data.spriteSheet,
+                            coinLocations[i][0], 
+                            coinLocations[i][1], 
+                            30, 
+                            42 
+                        )
+                    );
+                }
+            },
+
+            entities: function (data) {
+                console.log('DJS INIT 2');
+                /*var background = {
+                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
+                    x: 0,
+                    y: 0,
+                    w: 768,
+                    h: 600
+                };
+                var wallLocations = [
+                                    [0, 0, 48, 600],
+                                    [0, 528, 768, 72],
+                                    [239*3, 0, 17*3, 600],
+                                    //[192, 384, 336, 216],
+                                    //[726, 0, 42, 600]
+                                    ];
+                var passablebars = [
+                    [40*3, 161*3, 50*3, 6],
+                    [103*3, 166*3, 40*3, 6]
+                ];
+                data.entities.background = background;*/
+                
+                Entities.locations.djs.init(data);
+
+                
+            },
         }
     },
 

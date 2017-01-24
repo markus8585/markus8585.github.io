@@ -1,5 +1,7 @@
 var Render = {
     init: function (data) {
+        console.log('Render Init');
+        // Entities.init(data);
         Render.helpers.drawEntity(data.entities.background, data.canvas.bgCtx);
     },
 
@@ -19,6 +21,7 @@ var Render = {
 
     helpers: {
         drawEntity: function (entity, ctx) {
+            // console.log(entity);
             ctx.drawImage(entity.sprite.img,
                 entity.sprite.srcX, entity.sprite.srcY,
                 entity.sprite.srcW, entity.sprite.srcH,
