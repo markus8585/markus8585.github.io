@@ -14,9 +14,41 @@ var Render = {
 
         Render.helpers.drawEntity(data.entities.jack, data.canvas.fgCtx);
 
-        data.entities.coinsArray.forEach(function (coin) {
-            Render.helpers.drawEntity(coin, data.canvas.fgCtx);
-        });
+
+        if(data.storyLine.ransom && data.location == "djs"){
+            // data.entities.ransomNote = new Entities.helpers.Sprite(img, 260 * xScale, 0 * xScale, 16 * xScale, 21 * xScale);
+            // console.log(data.entities.ransomNote);
+            Render.helpers.drawEntity(data.entities.ransomNote, data.canvas.fgCtx);
+        }
+
+        // if(!Game.modal && data.storyLine.ransom){
+            data.entities.coinsArray.forEach(function (coin) {
+                Render.helpers.drawEntity(coin, data.canvas.fgCtx);
+            });
+        // }
+
+        if(data.location == "outdoorChurch"){
+            Render.helpers.drawEntity(data.entities.dog, data.canvas.fgCtx);
+        }
+
+        if(data.entities.jack.actionState == "readNote" && data.movieScreen < 9){
+            //Game.modal = true;
+            data.modal = new Image();
+            data.modal.src = "img/scene-1-screen-8.png";
+            var ransomNote = {
+                type: "ransomNote",
+                sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                x: 0,
+                y: 0,
+                w: 256*xScale,
+                h: 200*xScale
+            }
+            Render.helpers.drawEntity(ransomNote, data.canvas.fgCtx);
+        }else{
+            //Game.modal = false;
+        }
+
     },
 
     helpers: {

@@ -2,6 +2,9 @@ var Physics = {
     update: function (data) {
         Physics.helpers.gravity(data.entities.jack);
         Physics.collisionDetection(data);
+        if(Game.walkOn && !Game.hasRansom){
+            Physics.walkTo(data, 73*3, "left");
+        }
     },
 
     collisionDetection: function (data) {
@@ -14,6 +17,7 @@ var Physics = {
                 jack.h + jack.y > entity.y) {
                 //Collision Occured
                 Physics.handleCollision(data, entity);
+                // console.log(entity.type);
             }
         };
 
@@ -29,8 +33,14 @@ var Physics = {
             entityCollisionCheck(coin);
         });
 
-        // entityCollisionCheck(data.entities.exitPipe);
         entityCollisionCheck(data.entities.exitDoor);
+
+            // console.log(data.storyLine.ransom+'  -  '+data.location);
+        if(data.storyLine.ransom && data.location == "djs"){
+        // console.log(data.entities.ransomNote);
+            entityCollisionCheck(data.entities.ransomNote);
+        }
+
     },
 
     handleCollision: function (data, entity) {
@@ -40,11 +50,29 @@ var Physics = {
             //Left Side Wall Collision
             if (jack.x < entity.x && jack.y >= entity.y) {
                 jack.x = entity.x - jack.w;
+
+                // if( (jack.x+jack.w) > 700 ){
+                    // if(){}
+                    if(data.location == "outdoorDJs"){
+                        jack.exitReady = "outdoorChurch";
+                        Game.travel(data);
+                        jack.x = 10; jack.y = 168*3;
+                    }
+                // }
             }
 
             //Right Side Wall Collision
             if (jack.x > entity.x && jack.y >= entity.y) {
                 jack.x = entity.x + entity.w;
+
+                // if( (jack.x+jack.w) > 700 ){
+                    // if(){}
+                    if(data.location == "outdoorChurch"){
+                        jack.exitReady = "outdoorDJs";
+                        Game.travel(data);
+                        jack.x = 700; jack.y = 168*3;
+                    }
+                // }
             }
 
             //Top of Wall Collision
@@ -78,6 +106,7 @@ var Physics = {
             data.entities.score.value += 1;
 
             coinSound.play();
+            Entities.locations[data.location].coinLocations.splice(index, 1);
             coinsArray.splice(index, 1);
         }
 
@@ -108,13 +137,18 @@ var Physics = {
         }
 
         if (entity.type === "exitDoor") {
+                    if( !Game.hasRansom && data.location == "djs"){
+                        data.movieScreen = 0;
+                        jack.direction = "left";   
+                        Game.walkOn = true;
+                    }
 
             // console.log( jack.x +' | '+ entity.x +' | '+ jack.y +' | '+ entity.y +' | '+ entity.w);
             // console.log( (jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w) );
 
 
             if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
-                jack.exitReady = true;
+                jack.exitReady = entity.travelTo;
                 if (jack.velY < 0) {
                     //IGNORE JUMP GO EXIT IN INPUT
 
@@ -122,12 +156,15 @@ var Physics = {
                     // // // jack.y = 0;
                     // // jack.y = 528 - 63; // Attach to ground
                     // // jack.velY = 23; //Cancel out jump velocity
-
+                    // Game.walkOn = true;
 
                 }
+
+                // jack.direction = "left";   
+
             }else{
              if(jack.exitReady){ jack.exitReady = false; }
-         }
+            }
 
             //Top of Door Collision
             if (jack.y < entity.y && (jack.x + jack.w) > entity.x + 10 &&
@@ -138,6 +175,36 @@ var Physics = {
             }
         }else{
             if(jack.exitReady){ jack.exitReady = false; }
+        }
+
+        if(entity.type === "ransomNote"){
+            jack.actionState = "readNote";
+        }else{
+            if(jack.actionState){ jack.actionState = false; }
+        }
+    },
+
+    walkTo: function(data, x, direction) {
+        if(direction == "left"){
+            //data.entities.jack.x > x
+            doWalk = data.entities.jack.x > x;
+        }else{
+            //data.entities.jack.x < x
+            doWalk = data.entities.jack.x < x;
+        }
+        if( doWalk ){
+            if (data.entities.jack.velY === 0) {
+                data.entities.jack.currentState = data.entities.jack.states.walking;
+            } else {
+                data.entities.jack.x -= data.entities.jack.velX;
+            }
+        }else{
+            if(!Game.hasRansom){
+                Game.movie(data);
+            }
+            Game.walkOn = false;
+            Game.hasRansom = true;
+            data.entities.jack.direction = "right";   
         }
     },
 

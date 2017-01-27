@@ -3,7 +3,7 @@ var Input = {
         var self = this;
 
         $(window).on("keydown", function (event) {
-            self.helpers.down[event.keyCode] = true;
+                self.helpers.down[event.keyCode] = true;
         });
 
         $(window).on("keyup", function () {
@@ -16,70 +16,61 @@ var Input = {
         var jack = data.entities.jack;
 
         //Left Arrow
-        if (Input.helpers.isDown(37)) {
-            if (jack.velY === 0) {
-                jack.currentState = jack.states.walking;
-            } else {
-                jack.x -= jack.velX;
-            }
-
-            jack.direction = "left";
-        }
-
-        //Right Arrow
-        if (Input.helpers.isDown(39)) {
-            if (jack.velY === 0) {
-                jack.currentState = jack.states.walking;
-            } else {
-                jack.x += jack.velX;
-            }
-
-            jack.direction = "right";
-        }
-
-        //Up Arrow
-        if (Input.helpers.isPressed(38)) {
-            jack.currentState = jack.states.jumping;
-            
-            if(jack.exitReady){
-                console.log('EXIT to: ' + data.location);
-
-                if(data.location == "outdoorDJs"){
-
-                    if (Entities.locations.outdoorDJs.init){
-                        console.log('DJS OUTDOOR INIT 0a');
-                        Entities.locations.outdoorDJs.init(data);
-                        // Entities.locations.outdoorDJs.init = false;
-                    }else{
-                        console.log('DJS OUTDOOR INIT 0b');
-                        Entities.locations.outdoorDJs.entities(data);
-                    }
-                    data.location = "djs";
-
-                }else{
-
-                    if (Entities.locations.djs.init){
-                        console.log('DJS INDOOR INIT 0a');
-                        Entities.locations.djs.init(data);
-                        // Entities.locations.djs.init = false;
-                    }else{
-                        console.log('DJS INDOOR INIT 0b');
-                        Entities.locations.djs.entities(data);
-                    }
-                    data.location = "outdoorDJs";
+        if(!Game.walkOn && !Game.modal){
+            if (Input.helpers.isDown(37)) {
+                if (jack.velY === 0) {
+                    jack.currentState = jack.states.walking;
+                } else {
+                    jack.x -= jack.velX;
                 }
-                Render.init(data);
-            }
-        }
 
-        //Down Arrow
-        if (Input.helpers.isPressed(40)) {
-            jack.currentState = jack.states.crouching;
+                jack.direction = "left";
+            }
+
+            //Right Arrow
+            if (Input.helpers.isDown(39)) {
+                if (jack.velY === 0) {
+                    jack.currentState = jack.states.walking;
+                } else {
+                    jack.x += jack.velX;
+                }
+
+                jack.direction = "right";
+            }
+
+            //Up Arrow
+            if (Input.helpers.isPressed(38)) {
+                jack.currentState = jack.states.jumping;
+                if(jack.exitReady){
+                    Game.travel(data);
+                    if(data.entities.exitDoor){
+                        data.entities.jack.x = data.entities.exitDoor.x;
+                        if( !Game.hasRansom && data.location == "djs"){
+                            data.entities.jack.x = data.entities.exitDoor.x - 70;
+                            data.entities.jack.direction = "left";
+                        }
+                        data.entities.jack.y = data.entities.exitDoor.y;
+                    }
+                    data.entities.jack.velY = 23;
+                }
+
+            }
+
+            //Down Arrow
+            if (Input.helpers.isPressed(40)) {
+                jack.currentState = jack.states.crouching;
+                if(jack.actionState == "readNote"){
+                    Game.movie(data, 8);
+                }
+            }
+            
         }
 
         //Spacebar
         if (Input.helpers.isPressed(32)) {
-            Game.movie(data);
+            if(Game.modal){
+                Game.movie(data);
+            }
         }
     },
 
