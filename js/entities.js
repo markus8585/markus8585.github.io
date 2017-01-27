@@ -552,6 +552,7 @@ var Entities = {
             // var spriteX = 260;
             var spriteX = 362;
             var spriteY = 0;
+            this.collisionOff = false;
             this.actionState = false,
             this.jumpSound = new Audio("audio/lumberjack_jump.mp3");
             this.sprite = new Entities.helpers.Sprite(img, 260 * xScale, 0 * xScale, 16 * xScale, 21 * xScale);
@@ -668,6 +669,7 @@ var Entities = {
         },
         dog: function (img, x, y, w, h) {
             var self = this;
+            this.type = "dog";
             // var spriteX = 260;
             var spriteX = 0;
             var spriteY = 635*3;

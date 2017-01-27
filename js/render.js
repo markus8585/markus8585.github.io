@@ -22,10 +22,11 @@ var Render = {
         }
 
         // if(!Game.modal && data.storyLine.ransom){
+        if( data.storyLine.ransom){
             data.entities.coinsArray.forEach(function (coin) {
                 Render.helpers.drawEntity(coin, data.canvas.fgCtx);
             });
-        // }
+        }
 
         if(data.location == "outdoorChurch"){
             Render.helpers.drawEntity(data.entities.dog, data.canvas.fgCtx);

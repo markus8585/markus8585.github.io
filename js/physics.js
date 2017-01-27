@@ -29,9 +29,11 @@ var Physics = {
             entityCollisionCheck(bar);
         });
 
-        data.entities.coinsArray.forEach(function (coin) {
-            entityCollisionCheck(coin);
-        });
+        if(data.storyLine.ransom){
+            data.entities.coinsArray.forEach(function (coin) {
+                entityCollisionCheck(coin);
+            });
+        }
 
         entityCollisionCheck(data.entities.exitDoor);
 
@@ -39,6 +41,10 @@ var Physics = {
         if(data.storyLine.ransom && data.location == "djs"){
         // console.log(data.entities.ransomNote);
             entityCollisionCheck(data.entities.ransomNote);
+        }
+
+        if(data.location == "outdoorChurch"){
+            entityCollisionCheck(data.entities.dog);
         }
 
     },
@@ -182,6 +188,27 @@ var Physics = {
         }else{
             if(jack.actionState){ jack.actionState = false; }
         }
+
+        if(!data.entities.jack.collisionOff && entity.type === "dog"){
+            if(entity.x > jack.x){
+                if( (jack.x+jack.w-5) > (entity.x+10) ){
+                    data.entities.jack.velY = -15;
+                    data.entities.jack.x -= 13;
+                    data.entities.jack.collisionOff = true;
+                }
+
+            }else{
+                if( (entity.x+entity.w-10) > (jack.x+10) ){
+                    data.entities.jack.velY = -15;
+                    data.entities.jack.x += 13;
+                    data.entities.jack.collisionOff = true;
+                }
+            }
+            setTimeout(function(){ 
+                data.entities.jack.collisionOff = false;
+            }, 1000);
+        }
+
     },
 
     walkTo: function(data, x, direction) {
