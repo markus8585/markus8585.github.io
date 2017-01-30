@@ -59,8 +59,20 @@ var Physics = {
 
                 // if( (jack.x+jack.w) > 700 ){
                     // if(){}
-                    if(data.location == "outdoorDJs"){
+                    if( (jack.x+jack.w) > 700  && data.location == "outdoorDJs"){
                         jack.exitReady = "outdoorChurch";
+                        Game.travel(data);
+                        jack.x = 10; jack.y = 168*3;
+                    }
+
+                    if( (jack.x+jack.w) > 700  && data.location == "outdoorChurch"){
+                        jack.exitReady = "rogers";
+                        Game.travel(data);
+                        jack.x = 10; jack.y = 168*3;
+                    }
+
+                    if( (jack.x+jack.w) > 700  && data.location == "rogers"){
+                        jack.exitReady = "outdoorLab";
                         Game.travel(data);
                         jack.x = 10; jack.y = 168*3;
                     }
@@ -78,6 +90,18 @@ var Physics = {
                         Game.travel(data);
                         jack.x = 700; jack.y = 168*3;
                     }
+
+                    if( (jack.x+jack.w) < 100  && data.location == "rogers"){
+                        jack.exitReady = "outdoorChurch";
+                        Game.travel(data);
+                        jack.x = 700; jack.y = 168*3;
+                    }
+
+                    if( (jack.x+jack.w) < 100  && data.location == "outdoorLab"){
+                        jack.exitReady = "rogers";
+                        Game.travel(data);
+                        jack.x = 700; jack.y = 168*3;
+                    }
                 // }
             }
 
@@ -91,11 +115,14 @@ var Physics = {
         }
 
         if (entity.type === "bar") {
-            // console.log('entity.x:'+entity.x+ ' entity.y:'+entity.y+' jack.x:'+jack.x+' jack.y:'+jack.y);
             //Top of Bar Collision
             if (
-                (jack.y+jack.h-30) < entity.y && (jack.x + jack.w) > entity.x + 10 &&
-                jack.x < (entity.x + entity.w) - 10 && 
+                // (jack.y+jack.h-30) < entity.y && (jack.x + jack.w) > entity.x + 10 &&
+                // jack.x < (entity.x + entity.w) - 10 && 
+                // jack.velY >= 0
+                (jack.y+jack.h-20) < entity.y && 
+                (jack.x + jack.w - 15) > entity.x &&
+                (jack.x + 15 ) < (entity.x + entity.w) && 
                 jack.velY >= 0
                 ) {
                     jack.currentState = jack.states.standing
@@ -190,7 +217,7 @@ var Physics = {
         }
 
         if(!data.entities.jack.collisionOff && entity.type === "dog"){
-            if(entity.x > jack.x){
+            if(entity.x > jack.x && (jack.y+jack.h) > (entity.y+8) ){
                 if( (jack.x+jack.w-5) > (entity.x+10) ){
                     data.entities.jack.velY = -15;
                     data.entities.jack.x -= 13;
@@ -198,7 +225,7 @@ var Physics = {
                 }
 
             }else{
-                if( (entity.x+entity.w-10) > (jack.x+10) ){
+                if( (entity.x+entity.w-10) > (jack.x+10) && (jack.y+jack.h) > (entity.y+8) ){
                     data.entities.jack.velY = -15;
                     data.entities.jack.x += 13;
                     data.entities.jack.collisionOff = true;
@@ -237,7 +264,8 @@ var Physics = {
 
     helpers: {
         gravity: function (entity) {
-            entity.velY += 1.2 * 1.5;
+            // entity.velY += 1.2 * 1.5; //1.8
+            entity.velY += 2.4;
             entity.y += entity.velY;
         }
     }

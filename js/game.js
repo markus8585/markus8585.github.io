@@ -157,6 +157,29 @@ var Game = {
                 }
                 data.location = "indoorChurch";
 
+            }else if(jack.exitReady == "outdoorLab"){
+
+                if (Entities.locations.outdoorLab.init){
+                    console.log('OUTDOOR LAB INIT 0a');
+                    Entities.locations.outdoorLab.init(data);
+                    // Entities.locations.outdoorDJs.init = false;
+                }else{
+                    console.log('OUTDOOR Lab INIT 0b');
+                    Entities.locations.outdoorLab.entities(data);
+                }
+                data.location = "outdoorLab";
+
+            }else if(jack.exitReady == "rogers"){
+
+                if (Entities.locations.rogers.init){
+                    console.log('Rogers INIT 0a');
+                    Entities.locations.rogers.init(data);
+                }else{
+                    console.log('Rogers INIT 0b');
+                    Entities.locations.rogers.entities(data);
+                }
+                data.location = "rogers";
+
             }else{
 
                 if (Entities.locations.djs.init){
@@ -235,5 +258,26 @@ var Game = {
 
     }
 };
+
+// bg-canvas
+// fg-canvas
+// movie-canvas
+// get element references
+var foo = document.querySelector('#foo');
+var bgC = document.querySelector('#bg-canvas');
+var fgC = document.querySelector('#fg-canvas');
+var mvC = document.querySelector('#movie-canvas');
+
+var resizeFunction = function(){
+    var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    if(w > 768 && h > 600){
+        
+    }else{
+        fit( bgC, foo);
+        fit( fgC, foo);
+        fit( mvC, foo);
+    }
+}
 
 Game.init();

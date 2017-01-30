@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
 
     <link href="css/stylesheet.css" rel="stylesheet" />
+    <script src="https://rawgithub.com/soulwire/fit.js/master/fit.js"></script>
 </head>
 
-<body>
+<body id="foo" onresize="resizeFunction()">
     <div id="content"></div>
     <canvas id="bg-canvas" width="768" height="600"></canvas>
     <canvas id="fg-canvas" width="768" height="600"></canvas>

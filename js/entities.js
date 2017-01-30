@@ -36,9 +36,13 @@ var Entities = {
             [103*3, 166*3, 40*3, 6]
         ];
 
-        var coinLocations = [[249, 150], [297, 150], [345, 150], [393, 150], [441, 150],
-                             [201, 246], [249, 246], [297, 246], [345, 246], [393, 246], [441, 246], [489, 246],
-                             [201, 342], [249, 342], [297, 342], [345, 342], [393, 342], [441, 342], [489, 342]]
+        var coinLocations = [
+                            // [16*3, 18*3],[32*3,18*3],[48*3,18*3],[64*3,18*3],[80*3,18*3],[96*3,18*3],[112*3,18*3],[128*3,18*3],[144*3,18*3],[160*3,18*3],[176*3,18*3],[192*3,18*3],[208*3,18*3],[224*3,18*3],
+                            // [16*3, 50*3],[32*3,50*3],[48*3,50*3],[64*3,50*3],[80*3,50*3],[96*3,50*3],[112*3,50*3],[128*3,50*3],[144*3,50*3],[160*3,50*3],[176*3,50*3],[192*3,50*3],[208*3,50*3],[224*3,50*3],
+                            // [16*3, 82*3],[32*3,82*3],[48*3,82*3],[64*3,82*3],[80*3,82*3],[96*3,82*3],[112*3,82*3],[128*3,82*3],[144*3,82*3],[160*3,82*3],[176*3,82*3],[192*3,82*3],[208*3,82*3],[224*3,82*3],
+                            // [16*3, 114*3],[32*3,114*3],[48*3,114*3],[64*3,114*3],[80*3,114*3],[96*3,114*3],[112*3,114*3],[128*3,114*3],[144*3,114*3],[160*3,114*3],[176*3,114*3],[192*3,114*3],[208*3,114*3],[224*3,114*3],
+                            // [16*3, 146*3],[32*3,146*3],[48*3,146*3],[64*3,146*3],[80*3,146*3],[96*3,146*3],[112*3,146*3],[128*3,146*3],[144*3,146*3],[160*3,146*3],[176*3,146*3],[192*3,146*3],[208*3,146*3],[224*3,146*3],
+                            ];
 
         data.entities = {};
 
@@ -127,6 +131,15 @@ var Entities = {
                                     //[726, 0, 42, 600]
                                     ];
                 var passablebars = [
+                    [35*3, 171*3, 21*3, 6], //bench
+                    [93*3, 130*3, 56*3, 6], //sign
+                    [131*3, 153*3, 19*3, 6], //window lvl1
+                    [91*3, 104*3, 9*3, 6], //window lvl2
+                    [91*3, 104*3, 9*3, 6], //window lvl2
+                    [117*3, 107*3, 9*3, 6], //window lvl2
+                    [75*3, 88*3, 91*3, 6], //roof
+                    [87*3, 76*3, 67*3, 6], //roof
+                    [172*3, 166*3, 26*3, 6], //table
                     
                 ];
 
@@ -189,9 +202,13 @@ var Entities = {
         },
 
         djs: {
-            coinLocations: [[249, 150], [297, 150], [345, 150], [393, 150], [441, 150],
-                                     [201, 246], [249, 246], [297, 246], [345, 246], [393, 246], [441, 246], [489, 246],
-                                     [201, 342], [249, 342], [297, 342], [345, 342], [393, 342], [441, 342], [489, 342]],
+            coinLocations: [
+                            // [16*3, 18*3],[32*3,18*3],[48*3,18*3],[64*3,18*3],[80*3,18*3],[96*3,18*3],[112*3,18*3],[128*3,18*3],[144*3,18*3],[160*3,18*3],[176*3,18*3],[192*3,18*3],[208*3,18*3],[224*3,18*3],
+                            [48*3,50*3],[64*3,50*3],[80*3,50*3],[96*3,50*3],[112*3,50*3],[128*3,50*3],[144*3,50*3],[160*3,50*3],[176*3,50*3],[192*3,50*3],
+                            [48*3,82*3],[64*3,82*3],[80*3,82*3],[96*3,82*3],[112*3,82*3],[128*3,82*3],[144*3,82*3],[160*3,82*3],[176*3,82*3],[192*3,82*3],
+                            [32*3,114*3],[48*3,114*3],[64*3,114*3],[80*3,114*3],[96*3,114*3],[112*3,114*3],[128*3,114*3],[144*3,114*3],[160*3,114*3],[176*3,114*3],[192*3,114*3],[208*3,114*3],
+                            // [16*3, 146*3],[32*3,146*3],[48*3,146*3],[64*3,146*3],[80*3,146*3],[96*3,146*3],[112*3,146*3],[128*3,146*3],[144*3,146*3],[160*3,146*3],[176*3,146*3],[192*3,146*3],[208*3,146*3],[224*3,146*3],
+                            ],
             init: function (data) {
                 console.log('DJS INIT');
                 // console.log(data);
@@ -290,32 +307,16 @@ var Entities = {
 
             entities: function (data) {
                 console.log('DJS INIT 2');
-                /*var background = {
-                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
-                    x: 0,
-                    y: 0,
-                    w: 768,
-                    h: 600
-                };
-                var wallLocations = [
-                                    [0, 0, 48, 600],
-                                    [0, 528, 768, 72],
-                                    [239*3, 0, 17*3, 600],
-                                    //[192, 384, 336, 216],
-                                    //[726, 0, 42, 600]
-                                    ];
-                var passablebars = [
-                    [40*3, 161*3, 50*3, 6],
-                    [103*3, 166*3, 40*3, 6]
-                ];
-                data.entities.background = background;*/
-                
-                //Entities.locations.djs.init(data);
-
-                
             },
         },
         outdoorChurch: {
+            coinLocations: [
+                            //[48*3,18*3],[64*3,18*3],[80*3,18*3],[96*3,18*3],[112*3,18*3],[128*3,18*3],
+                            [16*3, 50*3],[32*3,50*3],[48*3,50*3],[64*3,50*3],[80*3,50*3],[96*3,50*3],[112*3,50*3],[128*3,50*3],[144*3,50*3],[160*3,50*3],[176*3,50*3],[192*3,50*3],[208*3,50*3],[224*3,50*3],
+                            [16*3, 82*3],[160*3,82*3],[176*3,82*3],[192*3,82*3],[208*3,82*3],[224*3,82*3],
+                            [16*3, 114*3],[160*3,114*3],[176*3,114*3],[192*3,114*3],[208*3,114*3],[224*3,114*3],
+                            [16*3, 146*3],[160*3,146*3],[176*3,146*3],[192*3,146*3],[208*3,146*3],[224*3,146*3],
+                            ],
             init: function (data) {
                 console.log('DJS OUTDOOR INIT 1');
                 var background = {
@@ -329,31 +330,20 @@ var Entities = {
                 var jack = data.entities.jack;
 
                 var dog = new Entities.helpers.dog(data.spriteSheet, 60, 159*3, 24*3, 17*3);
-
-                //var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 64);
-                // var jack = new Entities.helpers.Jack(data.spriteSheet, 305, 528 - 63, 48, 63);
-
-                //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
-                
                 var exitDoor = new Entities.helpers.ExitDoor(101*3, 152*3, 17*3, 24*3,"indoorChurch");
-
                 var score = data.entities.score;
-
                 var modal = new Entities.helpers.Modal(290, 100);
-
                 var wallLocations = [
-                                    [-55, 0, 48, 600],
-                                    [0, 528, 768, 72],
-                                    [239*3+7+48, 0, 17*3, 600],
-                                    //[192, 384, 336, 216],
-                                    //[726, 0, 42, 600]
-                                    ];
+                        [-55, 0, 48, 600],
+                        [0, 528, 768, 72],
+                        [239*3+7+48, 0, 17*3, 600],
+                    ];
                 var passablebars = [
-                    
-                ];
-
-                var coinLocations = [];
-
+                        [61*3, 121*3, 97*3, 6],
+                        [50*3, 81*3, 98*3, 6]
+                    ];
+                
+                var coinLocations = Entities.locations.outdoorChurch.coinLocations;
                 data.entities = {};
 
                 data.entities.background = background;
@@ -362,7 +352,6 @@ var Entities = {
                 data.entities.jack = jack;
                 data.entities.dog = dog;
                 data.entities.exitDoor = exitDoor;
-                //data.entities.exitPipe = exitPipe;
                 data.entities.wallsArray = [];
                 data.entities.barsArray = [];
                 data.entities.coinsArray = [];
@@ -424,51 +413,116 @@ var Entities = {
                     h: 600
                 };
 
-                // var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 64, 64);
                 var jack = data.entities.jack;
-                // var jack = new Entities.helpers.Jack(data.spriteSheet, 60, 0, 48, 63);
                 var ransomNote = new Entities.helpers.RansomNote(data.spriteSheet,178*3, 175*3, 10*3, 6*3);
-
-                //var exitPipe = new Entities.helpers.ExitPipe(624, 432, 144 * xScale, 168 * xScale);
-                
                 var exitDoor = new Entities.helpers.ExitDoor(201*3, 146*3, 17*3, 30*3,"outdoorChurch");
-
-                // var score = new Entities.helpers.Score(290, 70);
-
                 var modal = new Entities.helpers.Modal(290, 100);
-
                 var wallLocations = [
                                     [0, 0, 48, 600],
                                     [0, 528, 768, 72],
                                     [239*3, 0, 17*3, 600],
-                                    //[192, 384, 336, 216],
-                                    //[726, 0, 42, 600]
                                     ];
-                var passablebars = [];
-
-
+                var passablebars = [
+                    [96*3, 164*3, 54*3, 12*3], //choir
+                ];
                 var coinLocations = Entities.locations.indoorChurch.coinLocations;
-                // var coinLocations = [[249, 150], [297, 150], [345, 150], [393, 150], [441, 150],
-                //                      [201, 246], [249, 246], [297, 246], [345, 246], [393, 246], [441, 246], [489, 246],
-                //                      [201, 342], [249, 342], [297, 342], [345, 342], [393, 342], [441, 342], [489, 342]]
-
-                // data.entities = {};
 
                 data.entities.background = background;
-                // data.entities.score = score;
                 data.entities.modal = modal;
                 data.entities.jack = jack;
                 data.entities.ransomNote = ransomNote;
+                data.entities.exitDoor = exitDoor;
+                data.entities.wallsArray = [];
+                data.entities.barsArray = [];
+                data.entities.coinsArray = [];
 
+
+
+                for (var i = 0, len = wallLocations.length; i < len; i++) {
+                    data.entities.wallsArray.push( 
+                        new Entities.helpers.Wall( 
+                            //x,y,w,h
+                            wallLocations[i][0], wallLocations[i][1], wallLocations[i][2], wallLocations[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = passablebars.length; i < len; i++) {
+                    data.entities.barsArray.push(
+                        new Entities.helpers.Bar(
+                            //x,y,w,h
+                            passablebars[i][0], passablebars[i][1], passablebars[i][2], passablebars[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = coinLocations.length; i < len; i++) {
+                    data.entities.coinsArray.push(
+                        new Entities.helpers.Coin(
+                            // sprite,x,y,w,h
+                            data.spriteSheet, coinLocations[i][0], coinLocations[i][1], 30, 42 
+                        )
+                    );
+                }
+            },
+
+            entities: function (data) {
+                console.log('Indoor church INIT 2');                
+                Entities.locations.indoorChurch.init(data);
+            },
+        },
+        outdoorLab: {
+            init: function (data) {
+                console.log('Lab OUTDOOR INIT 1');
+                var background = {
+                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 512*3, 235 * xScale, 256 * xScale, 200 * xScale),
+                    x: 0,
+                    y: 0,
+                    w: 768,
+                    h: 600
+                };
+
+                var jack = data.entities.jack;
+                var exitDoor = new Entities.helpers.ExitDoor(141*3, 152*3, 17*3, 24*3,"indoorChurch");
+                var score = data.entities.score;
+                var modal = new Entities.helpers.Modal(290, 100);
+                var wallLocations = [
+                                    [-55, 0, 48, 600],
+                                    [0, 528, 768, 72],
+                                    [239*3+7+48, 0, 17*3, 600],
+                                    //[192, 384, 336, 216],
+                                    //[726, 0, 42, 600]
+                                    ];
+                var passablebars = [
+                    [9*3, 160*3, 52*3, 6], //bar
+                    [172*3, 160*3, 48*3, 6], //bar
+                    [42*3, 145*3, 19*3, 6], //pipe
+                    [61*3, 120*3, 21*3, 6], //roof-half
+                    [82*3, 79*3, 104*3, 6], //roof
+                    [106*3, 57*3, 56*3, 6], //sign
+                    [186*3, 145*3, 10*3, 6], //ac
+                    [93*3, 91*3, 14*3, 6], //window lvl2
+                    [115*3, 91*3, 14*3, 6], //window lvl2
+                    [138*3, 91*3, 14*3, 6], //window lvl2
+                    [160*3, 91*3, 14*3, 6], //window lvl2
+                    [72*3, 135*3, 14*3, 6], //window lvl1
+                    [93*3, 135*3, 14*3, 6], //window lvl1
+                    [166*3, 135*3, 14*3, 6], //window lvl1
+                ];
+
+                var coinLocations = [];
+
+                data.entities = {};
+
+                data.entities.background = background;
+                data.entities.score = score;
+                data.entities.modal = modal;
+                data.entities.jack = jack;
                 data.entities.exitDoor = exitDoor;
                 //data.entities.exitPipe = exitPipe;
                 data.entities.wallsArray = [];
                 data.entities.barsArray = [];
                 data.entities.coinsArray = [];
-
-                // console.log(data);
-                // console.log(data.entities);
-
 
 
                 for (var i = 0, len = wallLocations.length; i < len; i++) {
@@ -484,8 +538,8 @@ var Entities = {
                 }
 
                 for (var i = 0, len = passablebars.length; i < len; i++) {
-                    data.entities.barsArray.push(
-                        new Entities.helpers.Bar(
+                    data.entities.barsArray.push( 
+                        new Entities.helpers.Bar( 
                             //x,y,w,h
                             passablebars[i][0], 
                             passablebars[i][1], 
@@ -496,44 +550,109 @@ var Entities = {
                 }
 
                 for (var i = 0, len = coinLocations.length; i < len; i++) {
-                    data.entities.coinsArray.push(
-                        new Entities.helpers.Coin(
+                    data.entities.coinsArray.push( 
+                        new Entities.helpers.Coin( 
                             // sprite,x,y,w,h
                             data.spriteSheet,
                             coinLocations[i][0], 
                             coinLocations[i][1], 
                             30, 
                             42 
-                        )
+                        ) 
                     );
                 }
             },
-
             entities: function (data) {
-                console.log('Indoor church INIT 2');
-                /*var background = {
-                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
+                console.log('DJS OUTDOOR INIT 2');
+                Entities.locations.outoorLab.init(data);
+                //Entities.locations.outdoorDJs.init(data);
+            },
+        },
+        rogers: {
+            init: function (data) {
+                console.log('Rogers OUTDOOR INIT 1');
+                var background = {
+                    sprite: new Entities.helpers.Sprite(data.spriteSheet, 512*3, 435 * xScale, 256 * xScale, 200 * xScale),
                     x: 0,
                     y: 0,
                     w: 768,
                     h: 600
                 };
+
+                var jack = data.entities.jack;
+                var exitDoor = new Entities.helpers.ExitDoor(89*3, 152*3, 17*3, 24*3,"indoorRogers");
+                var score = data.entities.score;
+                var modal = new Entities.helpers.Modal(290, 100);
                 var wallLocations = [
-                                    [0, 0, 48, 600],
+                                    [-55, 0, 48, 600],
                                     [0, 528, 768, 72],
-                                    [239*3, 0, 17*3, 600],
+                                    [239*3+7+48, 0, 17*3, 600],
                                     //[192, 384, 336, 216],
                                     //[726, 0, 42, 600]
                                     ];
                 var passablebars = [
-                    [40*3, 161*3, 50*3, 6],
-                    [103*3, 166*3, 40*3, 6]
+                    [67*3, 159*3, 13*3, 6], //pillar
+                    [113*3, 159*3, 13*3, 6], //pillar
+                    [26*3, 134*3, 141*3, 6], //roof 1
+                    [36*3, 103*3, 121*3, 6], //roof 2
                 ];
-                data.entities.background = background;*/
-                
-                Entities.locations.indoorChurch.init(data);
 
-                
+                var coinLocations = [];
+
+                data.entities = {};
+
+                data.entities.background = background;
+                data.entities.score = score;
+                data.entities.modal = modal;
+                data.entities.jack = jack;
+                data.entities.exitDoor = exitDoor;
+                //data.entities.exitPipe = exitPipe;
+                data.entities.wallsArray = [];
+                data.entities.barsArray = [];
+                data.entities.coinsArray = [];
+
+
+                for (var i = 0, len = wallLocations.length; i < len; i++) {
+                    data.entities.wallsArray.push( 
+                        new Entities.helpers.Wall( 
+                            //x,y,w,h
+                            wallLocations[i][0], 
+                            wallLocations[i][1], 
+                            wallLocations[i][2], 
+                            wallLocations[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = passablebars.length; i < len; i++) {
+                    data.entities.barsArray.push( 
+                        new Entities.helpers.Bar( 
+                            //x,y,w,h
+                            passablebars[i][0], 
+                            passablebars[i][1], 
+                            passablebars[i][2], 
+                            passablebars[i][3] 
+                        ) 
+                    );
+                }
+
+                for (var i = 0, len = coinLocations.length; i < len; i++) {
+                    data.entities.coinsArray.push( 
+                        new Entities.helpers.Coin( 
+                            // sprite,x,y,w,h
+                            data.spriteSheet,
+                            coinLocations[i][0], 
+                            coinLocations[i][1], 
+                            30, 
+                            42 
+                        ) 
+                    );
+                }
+            },
+            entities: function (data) {
+                console.log('DJS OUTDOOR INIT 2');
+                Entities.locations.rogers.init(data);
+                //Entities.locations.outdoorDJs.init(data);
             },
         },
     },
