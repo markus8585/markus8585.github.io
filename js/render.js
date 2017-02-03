@@ -12,6 +12,17 @@ var Render = {
 
         Render.helpers.drawText(data.entities.score, data.canvas.fgCtx);
 
+
+        if(Game.modal == false && data.location == "indoorLab"){
+            if(data.entities.score.value > 26){
+                data.movieScreen = 15;
+                Game.modal = true;
+                Game.movie(data);
+            }else{
+                Render.helpers.drawEntity(data.entities.halt, data.canvas.fgCtx);
+            }
+        }
+
         Render.helpers.drawEntity(data.entities.jack, data.canvas.fgCtx);
 
 
@@ -31,8 +42,45 @@ var Render = {
         if(data.location == "outdoorChurch"){
             Render.helpers.drawEntity(data.entities.dog, data.canvas.fgCtx);
         }
+        if(data.location == "djs"){
+            // if(data.location == "djs" && Game.orderCoffee){
+            //     Game.orderCoffee = false;
+            //     Game.modal = true;
+            //     data.movieScreen = 19;
+            //     Game.movie(data);
+            // }
+            if(Game.orderCoffee){
+                Game.orderCoffee = false;
+                data.movieScreen = 24;
+                Game.movie(data);
+                Game.modal = true;
 
-        if(data.entities.jack.actionState == "readNote" && data.movieScreen < 9){
+                setTimeout(function(){ 
+                    data.movieScreen = 25;
+                    Game.movie(data);
+                }, 2000);
+                setTimeout(function(){ 
+                        Game.movie(data, 26);
+                        Game.modal = false;
+                }, 4000);
+            }
+
+
+            Render.helpers.drawEntity(data.entities.dex, data.canvas.fgCtx);
+            if(false){
+                data.entities.jo = new Entities.helpers.stillChar(data.spriteSheet, 200, 154*3, 17*3, 22*3, 430*3, 0);
+            }
+
+            if(!data.storyLine.ransom){
+                Render.helpers.drawEntity(data.entities.jo, data.canvas.bgCtx);
+            }
+
+        }
+
+        
+
+
+        if(data.entities.jack.actionState == "readNote" && data.movieScreen < 13){
             //Game.modal = true;
             data.modal = new Image();
             data.modal.src = "img/scene-1-screen-8.png";

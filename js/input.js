@@ -60,7 +60,8 @@ var Input = {
             if (Input.helpers.isPressed(40)) {
                 jack.currentState = jack.states.crouching;
                 if(jack.actionState == "readNote"){
-                    Game.movie(data, 8);
+                    data.movieScreen = 12;
+                    Game.movie(data);
                 }
             }
             
@@ -68,6 +69,7 @@ var Input = {
 
         //Spacebar
         if (Input.helpers.isPressed(32)) {
+            console.log(data);
             if(Game.modal){
                 Game.movie(data);
             }

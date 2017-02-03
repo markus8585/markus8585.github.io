@@ -2,8 +2,11 @@ var Physics = {
     update: function (data) {
         Physics.helpers.gravity(data.entities.jack);
         Physics.collisionDetection(data);
-        if(Game.walkOn && !Game.hasRansom){
+        if(Game.walkOn && !Game.hasRansom && data.location == "djs"){
             Physics.walkTo(data, 73*3, "left");
+        }
+        if(Game.walkOn && !Game.hasRansom && data.location == "indoorLab"){
+            Physics.walkTo(data, 580, "left");
         }
     },
 
@@ -45,6 +48,10 @@ var Physics = {
 
         if(data.location == "outdoorChurch"){
             entityCollisionCheck(data.entities.dog);
+        }
+
+        if(data.location == "djs"){
+            entityCollisionCheck(data.entities.dex);
         }
 
     },
@@ -175,6 +182,13 @@ var Physics = {
                         jack.direction = "left";   
                         Game.walkOn = true;
                     }
+                    if( data.entities.score.value > 10 && data.location == "indoorLab"){
+                        if (data.movieScreen < 9 ){
+                            data.movieScreen = 9;
+                            Game.walkOn = true;
+                        }
+                        jack.direction = "left";   
+                    }
 
             // console.log( jack.x +' | '+ entity.x +' | '+ jack.y +' | '+ entity.y +' | '+ entity.w);
             // console.log( (jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w) );
@@ -256,9 +270,12 @@ var Physics = {
             if(!Game.hasRansom){
                 Game.movie(data);
             }
+            if(data.location == "indoorLab"){
+                Game.movie(data);
+            }
             Game.walkOn = false;
             Game.hasRansom = true;
-            data.entities.jack.direction = "right";   
+            data.entities.jack.direction = "right"; 
         }
     },
 
