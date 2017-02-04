@@ -316,10 +316,12 @@ var Game = {
                 if(screenNum == 25 ){
                     Game.allowInput = false;
                     setTimeout(function(){ 
+                        confetti.start();
+                    }, 2000);
+                    setTimeout(function(){ 
                         data.movieScreen = 30;
                         Game.movie(data);
-                    }, 6000);
-                    confetti.start();
+                    }, 5000);
                 }
 
             Render.helpers.drawEntity(background, data.canvas.movieCtx);
