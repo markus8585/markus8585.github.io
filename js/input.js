@@ -40,21 +40,21 @@ var Input = {
 
             //Up Arrow
             if (Input.helpers.isPressed(38)) {
-                if(data.location == "outdoorDJs" && !Game.rogerSafe){
-                    data.modal = new Image();
-                        data.modal.src = "img/explore.png";
-                        data.entities.dialog = {
-                            type: "ransomNote",
-                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
-                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
-                            x: 0,
-                            y: 0,
-                            w: 256*xScale,
-                            h: 200*xScale
-                        }
-                }else{
-                    jack.currentState = jack.states.jumping;
-                    if(jack.exitReady){
+                jack.currentState = jack.states.jumping;
+                if(jack.exitReady){
+                    if(data.location == "outdoorDJs" && !Game.rogerSafe){
+                        data.modal = new Image();
+                            data.modal.src = "img/explore.png";
+                            data.entities.dialog = {
+                                type: "ransomNote",
+                                sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                                //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                                x: 0,
+                                y: 0,
+                                w: 256*xScale,
+                                h: 200*xScale
+                            }
+                    }else{
                         Game.travel(data);
                         if(data.entities.exitDoor){
                             data.entities.jack.x = data.entities.exitDoor.x;
