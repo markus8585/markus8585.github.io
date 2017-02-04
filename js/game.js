@@ -16,6 +16,9 @@ var Game = {
     hasRansom: false,
     rogerSafe: false,
     loadedDJ: false, 
+    introMom: true,
+    introAllison: true,
+    introRoger: true,
     init: function () {
         var bgCanvas = document.getElementById("bg-canvas");
         var fgCanvas = document.getElementById("fg-canvas");
@@ -236,7 +239,6 @@ var Game = {
             screenNum = data.movieScreen;
             data.movieScreen++;
         }
-
         var screenShot = [
             [0, 0, "img/scene-1-screen-1.png", false, false],
             [0, 0, "img/jojo.png", false, false],
@@ -270,7 +272,7 @@ var Game = {
             false,
             [0, 0, "img/yay.png", false, false], //21
             false,
-            [0, 0, "img/mom.png", false, false], //21
+            [0, 0, "img/kay.png", false, false], //21
             false,
             [0, 0, "img/allison.png", false, false], //21
             false,

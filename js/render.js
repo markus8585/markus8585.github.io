@@ -21,7 +21,9 @@ var Render = {
 
         Render.helpers.drawModal(data.entities.modal, data.canvas.fgCtx);
 
-        Render.helpers.drawText(data.entities.score, data.canvas.fgCtx);
+        if(data.storyLine.ransom){
+            Render.helpers.drawText(data.entities.score, data.canvas.fgCtx);
+        }
 
 
         if(Game.modal == false && data.location == "indoorLab"){
@@ -49,16 +51,34 @@ var Render = {
                 data.entities.roger = new Entities.helpers.stillChar(data.spriteSheet, 189*3, 154*3, 17*3, 22*3, 464*3, 0*3);
             }
             Render.helpers.drawEntity(data.entities.roger, data.canvas.fgCtx);
+            if(Game.introRoger && data.entities.jack.x > 450){
+                data.movieScreen = 36;
+                Game.modal = true;
+                Game.movie(data);
+                Game.introRoger = false;
+            }
         }
 
         if(Game.modal == false && data.location == "indoorRogers"){
             data.entities.allison = new Entities.helpers.stillChar(data.spriteSheet, 121*3, 154*3, 17*3, 22*3, 447*3, 0*3);
             Render.helpers.drawEntity(data.entities.allison, data.canvas.fgCtx);
+            if(Game.introAllison && data.entities.jack.x < 480){
+                data.movieScreen = 34;
+                Game.modal = true;
+                Game.movie(data);
+                Game.introAllison = false;
+            }
         }
 
         if(data.location == "indoorChurch"){
             data.entities.mom = new Entities.helpers.stillChar(data.spriteSheet, 66*3, 154*3, 17*3, 22*3, 328*3, 88*3);
             Render.helpers.drawEntity(data.entities.mom, data.canvas.fgCtx);
+            if(Game.introMom && data.entities.jack.x < 250){
+                data.movieScreen = 32;
+                Game.modal = true;
+                Game.movie(data);
+                Game.introMom = false;
+            }
         }
 
 
@@ -177,7 +197,7 @@ var Render = {
             ctx.fillStyle = text.color;
             ctx.textAlign = "center";
             // ctx.fillText("Coins:" + " " + text.value, text.x, text.y);
-            ctx.fillText("Coins:" + " " + text.value, 768/2, text.y, 400);
+            ctx.fillText("Beans:" + " " + text.value, 768/2, text.y, 400);
         },
 
         drawModal: function (text, ctx) {
