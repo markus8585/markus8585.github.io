@@ -1,7 +1,7 @@
 var Animation = {
     update: function (data) {
         Animation.jack(data);
-        if(data.location == "outdoorChurch"){
+        if(data.location == "rogers"){
             Animation.dog(data);
         }
         Animation.coins(data);

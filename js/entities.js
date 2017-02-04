@@ -343,7 +343,6 @@ var Entities = {
 
                 var jack = data.entities.jack;
 
-                var dog = new Entities.helpers.dog(data.spriteSheet, 60, 159*3, 24*3, 17*3);
                 var exitDoor = new Entities.helpers.ExitDoor(101*3, 152*3, 17*3, 24*3,"indoorChurch");
                 var score = data.entities.score;
                 var modal = new Entities.helpers.Modal(290, 100);
@@ -365,7 +364,6 @@ var Entities = {
                 data.entities.score = score;
                 data.entities.modal = modal;
                 data.entities.jack = jack;
-                data.entities.dog = dog;
                 data.entities.exitDoor = exitDoor;
                 data.entities.wallsArray = [];
                 data.entities.barsArray = [];
@@ -633,7 +631,7 @@ var Entities = {
                                     [0, 528, 768, 72],
                                     [239*3, 0, 17*3, 600],
                                     ];
-                if(data.storyLine.ransom){
+                if(data.storyLine.ransom && data.entities.score.value >= scoreGoal){
                     var wallLocations = [
                                     [0, 0, 48, 600],
                                     [0, 528, 768, 72],
@@ -709,7 +707,7 @@ var Entities = {
                 [32*3,50*3],[48*3,50*3],[64*3,50*3],[80*3,50*3],[96*3,50*3],[112*3,50*3],[128*3,50*3],[144*3,50*3],
                 [32*3,82*3],[48*3,82*3],[64*3,82*3],[80*3,82*3],[96*3,82*3],[112*3,82*3],[128*3,82*3],[144*3,82*3],
                 [176*3,114*3],[192*3,114*3],[208*3,114*3],[224*3,114*3],
-                [176*3,146*3],[192*3,146*3],[208*3,146*3],[224*3,146*3],
+                [176*3,146*3],[208*3,146*3],[224*3,146*3],
                 ],
             init: function (data) {
                 console.log('Rogers OUTDOOR INIT 1');
@@ -722,6 +720,7 @@ var Entities = {
                 };
 
                 var jack = data.entities.jack;
+                var dog = new Entities.helpers.dog(data.spriteSheet, 60, 159*3, 24*3, 17*3);
                 var exitDoor = new Entities.helpers.ExitDoor(89*3, 152*3, 17*3, 24*3,"indoorRogers");
                 var score = data.entities.score;
                 var modal = new Entities.helpers.Modal(290, 100);
@@ -747,6 +746,7 @@ var Entities = {
                 data.entities.score = score;
                 data.entities.modal = modal;
                 data.entities.jack = jack;
+                data.entities.dog = dog;
                 data.entities.exitDoor = exitDoor;
                 //data.entities.exitPipe = exitPipe;
                 data.entities.wallsArray = [];
@@ -845,10 +845,13 @@ var Entities = {
                         ];
                 }
                 var passablebars = [
-                    [40*3, 161*3, 50*3, 6],
-                    [103*3, 166*3, 40*3, 6],
-                    [76*3, 133*3, 33*3, 6], // shelf
-                    [128*3, 133*3, 33*3, 6], // shelf
+                    [21*3, 108*3, 45*3, 6], //shelf
+                    [71*3, 139*3, 28*3, 6],
+                    [75*3, 104*3, 52*3, 6], // window
+                    [140*3, 104*3, 52*3, 6], // window
+                    [141*3, 143*3, 49*3, 6], // window
+                    [108*3, 160*3, 36*3, 6], // window
+                    [176*3, 165*3, 13*3, 6], // shelf
                 ];
 
 

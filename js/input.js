@@ -40,18 +40,32 @@ var Input = {
 
             //Up Arrow
             if (Input.helpers.isPressed(38)) {
-                jack.currentState = jack.states.jumping;
-                if(jack.exitReady){
-                    Game.travel(data);
-                    if(data.entities.exitDoor){
-                        data.entities.jack.x = data.entities.exitDoor.x;
-                        if( !Game.hasRansom && data.location == "djs"){
-                            data.entities.jack.x = data.entities.exitDoor.x - 70;
-                            data.entities.jack.direction = "left";
+                if(data.location == "outdoorDJs" && !Game.rogerSafe){
+                    data.modal = new Image();
+                        data.modal.src = "img/explore.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
                         }
-                        data.entities.jack.y = data.entities.exitDoor.y;
+                }else{
+                    jack.currentState = jack.states.jumping;
+                    if(jack.exitReady){
+                        Game.travel(data);
+                        if(data.entities.exitDoor){
+                            data.entities.jack.x = data.entities.exitDoor.x;
+                            if( !Game.hasRansom && data.location == "djs"){
+                                data.entities.jack.x = data.entities.exitDoor.x - 70;
+                                data.entities.jack.direction = "left";
+                            }
+                            data.entities.jack.y = data.entities.exitDoor.y;
+                        }
+                        data.entities.jack.velY = 23;
                     }
-                    data.entities.jack.velY = 23;
                 }
 
             }
@@ -63,12 +77,15 @@ var Input = {
                     data.movieScreen = 12;
                     Game.movie(data);
                 }
+                if(jack.actionState == "saveRoger"){
+                    Game.rogerSafe = true;
+                }
             }
             
         }
 
         //Spacebar
-        if (Input.helpers.isPressed(32)) {
+        if (Game.allowInput && Input.helpers.isPressed(32)) {
             console.log(data);
             if(Game.modal){
                 Game.movie(data);

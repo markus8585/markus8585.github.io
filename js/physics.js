@@ -12,6 +12,8 @@ var Physics = {
 
     collisionDetection: function (data) {
         var jack = data.entities.jack;
+        data.dialog = false;
+        data.entities.dialog = "";
 
         var entityCollisionCheck = function (entity) {
             if (jack.x < entity.x + entity.w &&
@@ -46,12 +48,24 @@ var Physics = {
             entityCollisionCheck(data.entities.ransomNote);
         }
 
-        if(data.location == "outdoorChurch"){
+        if(data.location == "rogers"){
             entityCollisionCheck(data.entities.dog);
         }
 
         if(data.location == "djs"){
             entityCollisionCheck(data.entities.dex);
+        }
+
+        if(data.location == "indoorChurch" && data.entities.mom){
+            entityCollisionCheck(data.entities.mom);
+        }
+
+        if(data.location == "indoorRogers" && data.entities.allison){
+            entityCollisionCheck(data.entities.allison);
+        }
+
+        if(data.location == "rogers" && data.entities.roger){
+            entityCollisionCheck(data.entities.roger);
         }
 
     },
@@ -177,6 +191,22 @@ var Physics = {
         }
 
         if (entity.type === "exitDoor") {
+                    if(data.location == "outdoorDJs" && !Game.rogerSafe){
+                        // jack.actionState = "explore";
+                        data.dialog = true;
+                        data.modal = new Image();
+                        data.modal.src = "img/explore.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+
+                    }
                     if( !Game.hasRansom && data.location == "djs"){
                         data.movieScreen = 0;
                         jack.direction = "left";   
@@ -224,10 +254,10 @@ var Physics = {
             if(jack.exitReady){ jack.exitReady = false; }
         }
 
-        if(entity.type === "ransomNote"){
+        if(data.location == "djs" && entity.type === "ransomNote"){
             jack.actionState = "readNote";
         }else{
-            if(jack.actionState){ jack.actionState = false; }
+            if(data.location == "djs" && jack.actionState){ jack.actionState = false; }
         }
 
         if(!data.entities.jack.collisionOff && entity.type === "dog"){
@@ -249,6 +279,167 @@ var Physics = {
                 data.entities.jack.collisionOff = false;
             }, 1000);
         }
+
+        if(entity.type === "dex"){
+            if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
+                data.dialog = true;
+                if(!data.storyLine.ransom){
+                        data.modal = new Image();
+                        data.modal.src = "img/cant-talk-coffee.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                        // data.entities.dexModal = new Entities.helpers.stillChar(data.modal, 0, 0, 256*3, 200*3, 0, 0);
+                }else{
+                    data.modal = new Image();
+                        data.modal.src = "img/dj-napped-jo.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                }
+                // Render.helpers.drawEntity(dexModal, data.canvas.movieCtx);
+            }
+        }
+
+
+
+
+        if(data.location == "indoorRogers" && entity.type === "stillChar"){
+            if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
+                data.dialog = true;
+                if(!data.storyLine.ransom){
+                        data.modal = new Image();
+                        data.modal.src = "img/busy-weaving.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                        // data.entities.dexModal = new Entities.helpers.stillChar(data.modal, 0, 0, 256*3, 200*3, 0, 0);
+                }else{
+                    data.modal = new Image();
+                        data.modal.src = "img/jos-kidnapped.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                }
+                // Render.helpers.drawEntity(dexModal, data.canvas.movieCtx);
+            }
+        }
+
+
+        if(data.location == "indoorChurch" && entity.type === "stillChar"){
+            if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
+                data.dialog = true;
+                if(!data.storyLine.ransom){
+                        data.modal = new Image();
+                        data.modal.src = "img/love-jojo.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                        // data.entities.dexModal = new Entities.helpers.stillChar(data.modal, 0, 0, 256*3, 200*3, 0, 0);
+                }else{
+                    data.modal = new Image();
+                        data.modal.src = "img/jojo-worry.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                }
+                // Render.helpers.drawEntity(dexModal, data.canvas.movieCtx);
+            }
+        }
+
+        if(data.location == "rogers" && entity.type === "stillChar"){
+            jack.actionState = "saveRoger";
+        }else{
+            if(data.location == "rogers" && jack.actionState){ jack.actionState = false; }
+        }
+
+        if(data.location == "rogers" && entity.type === "stillChar"){
+
+            if ((jack.x+15) > entity.x && jack.y >= entity.y && (jack.x + jack.w) <= (entity.x + 15 + entity.w)) {
+                data.dialog = true;
+                if(!data.storyLine.ransom){
+                        data.modal = new Image();
+                        if(Game.rogerSafe){
+                            data.modal.src = "img/roger-thx.png";
+                            data.entities.dialog = {
+                                type: "ransomNote",
+                                sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                                //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                                x: 0,
+                                y: 0,
+                                w: 256*xScale,
+                                h: 200*xScale
+                            }
+                        }else{
+                            data.modal.src = "img/roger-save.png";
+                            data.entities.dialog = {
+                                type: "ransomNote",
+                                sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                                //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                                x: 0,
+                                y: 0,
+                                w: 256*xScale,
+                                h: 200*xScale
+                            }
+                        }
+                        // data.entities.dexModal = new Entities.helpers.stillChar(data.modal, 0, 0, 256*3, 200*3, 0, 0);
+                }else{
+                    data.modal = new Image();
+                        // data.modal.src = "img/roger-thx.png";
+                        data.modal.src = "img/that-way.png";
+                        data.entities.dialog = {
+                            type: "ransomNote",
+                            sprite: new Entities.helpers.Sprite(data.modal, 0, 0, 256 * xScale, 200 * xScale),
+                            //sprite: new Entities.helpers.Sprite(img, 0 * xScale, 0 * xScale, 10 * xScale, 5 * xScale),
+                            x: 0,
+                            y: 0,
+                            w: 256*xScale,
+                            h: 200*xScale
+                        }
+                }
+                // Render.helpers.drawEntity(dexModal, data.canvas.movieCtx);
+            }
+        }
+
+
+
+
 
     },
 
