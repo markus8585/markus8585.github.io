@@ -4,6 +4,8 @@ var Physics = {
         Physics.collisionDetection(data);
         if(Game.walkOn && !Game.hasRansom && data.location == "djs"){
             Physics.walkTo(data, 73*3, "left");
+            ga('send', 'event', 'Game', 'enterdjs', 'Game Enter djs', 0);
+                
         }
         if(Game.walkOn && !Game.hasRansom && data.location == "indoorLab"){
             Physics.walkTo(data, 580, "left");

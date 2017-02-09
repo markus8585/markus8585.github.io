@@ -79,6 +79,8 @@ var Input = {
                 }
                 if(jack.actionState == "saveRoger"){
                     Game.rogerSafe = true;
+                    ga('send', 'event', 'Game', 'saveroger', 'Game Save Roger', 0);
+
                 }
             }
             

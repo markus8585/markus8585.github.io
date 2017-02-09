@@ -103,26 +103,7 @@ var Game = {
         Movement.update(data);
         Physics.update(data);
 
-        /*if(data.entities.score.value == 2){
-            console.log('MOVIE I');
-            var spriteSheet = new Image();
-            if(xScale < 1){
-                spriteSheet.src = "img/sprite_sheet_x3.png";
-            }else{
-                spriteSheet.src = "img/sprite_sheet.png";
-            }
-
-            var background = {
-                sprite: new Entities.helpers.Sprite(data.spriteSheet, 0, 35 * xScale, 256 * xScale, 200 * xScale),
-                x: 0,
-                y: 0,
-                w: 768,
-                h: 600
-            };
-
-            Render.helpers.drawEntity(data.entities.background, data.canvas.movieCtx);
-
-        }*/
+        
     },
 
     render: function (data) {
@@ -239,6 +220,12 @@ var Game = {
             screenNum = data.movieScreen;
             data.movieScreen++;
         }
+
+
+
+
+
+
         var screenShot = [
             [0, 0, "img/scene-1-screen-1.png", false, false],
             [0, 0, "img/jojo.png", false, false],
@@ -314,6 +301,7 @@ var Game = {
                 }
 
                 if(screenNum == 25 ){
+                    ga('send', 'event', 'Game', 'finish', 'Game Finish', data.entities.score.value);
                     Game.allowInput = false;
                     setTimeout(function(){ 
                         confetti.start();
