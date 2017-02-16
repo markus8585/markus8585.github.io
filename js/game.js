@@ -228,8 +228,8 @@ var Game = {
 
         var screenShot = [
             [0, 0, "img/scene-1-screen-1.png", false, false],
-            [0, 0, "img/jojo.png", false, false],
             [0, 0, "img/dexter.png", false, false],
+            [0, 0, "img/jojo.png", false, false],
             [0, 0, "img/scene-1-screen-2.png", true, false],
             [0, 0, "img/scene-1-screen-3.png", true, false],
             [0, 0, "img/tay-idk.png", false, false],
