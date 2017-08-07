@@ -1,213 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Gifchambeau</title>
-	<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+
+<head>
+	<meta charset="utf-8">
+	<title>Gifchambeau</title>
+	<link rel="stylesheet" href="css/gifchambeau.css">
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script> -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/firebase.js"></script>
 	<script>
-		
-		// Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyAXiLCGoFUG-UBPk2S3wyyyIfyxNDakjbo",
-	    authDomain: "gifchambeau-67f7b.firebaseapp.com",
-	    databaseURL: "https://gifchambeau-67f7b.firebaseio.com",
-	    projectId: "gifchambeau-67f7b",
-	    storageBucket: "",
-	    messagingSenderId: "439998404166"
-	  };
-	  firebase.initializeApp(config);
-		
-		
-		
-	
-	var FIREBASE_URL = 'https://gifchambeau-67f7b.firebaseio.com';
-	var fb = new Firebase(FIREBASE_URL);
-	var fotos;
-	var initLoad = true;
+		jQuery(document).ready(function($) {
 
-	$('.onLoggedIn form').submit(function () {
-	  var url = $('.onLoggedIn input[type="url"]').val();
-	  
-	  fotos.push(url, function(err){
-		console.log(err);
-	  })
-	  
-	  event.preventDefault();
-	})
+			$(function() {
+				$.fn.hasAttr = function(e) {
+					var t = this.attr(e);
+					if (typeof t !== typeof undefined && t !== false) return true;
+					return false
+				};
+				$.fn.materialForm = function() {
+					function e(e) {
+						var t = e.attr("type");
+						return t != "hidden" && t != "submit" && t != "checkbox" && t != "radio" && t != "file" ? 1 : 0
+					}
 
-	$('.onTempPassword form').submit(function () {
-	  var email = fb.getAuth().password.email;
-	  var oldPw = $('.onTempPassword input:nth-child(1)').val();
-	  var newPw = $('.onTempPassword input:nth-child(2)').val();
-	  
-	  fb.changePassword({
-		email: email,
-		oldPassword: oldPw,
-		newPassword: newPw
-	  }, function(err) {
-		if (err) {
-		  alert(err.toString());
-		} else {
-		  fb.unauth();
-		}
-	  });
-	  
-	  event.preventDefault();
-	})
+					function t(e) {
+						if (e.val()) e.addClass("filled");
+						else e.removeClass("filled")
+					}
+					this.find("input, textarea").each(function() {
+						if (e($(this))) {
+							var n = $(this).attr("name");
+							$(this).attr("id", n);
+							var r = $(this).wrap("<div class='material-input'></div>").parent();
+							r.append("<span class='material-bar'></span>");
+							var i = $(this).prop("tagName").toLowerCase();
+							r.addClass(i);
+							var s = $(this).attr("placeholder");
+							if (s) {
+								r.append("<label for='" + n + "'>" + s + "</label>");
+								$(this).removeAttr("placeholder")
+							}
+							t($(this))
+						}
+					});
+					this.find("input, textarea").on("blur", function() {
+						if (e($(this))) t($(this))
+					});
+					this.find("select").each(function(e) {
+						var t = $(this).attr("placeholder");
+						var n = $(this).attr("multiple") ? "checkbox" : "radio";
+						var r = id = $(this).attr("name");
+						var i = $(this).wrap("<div class='material-select'></div>").parent();
+						if (n == "checkbox") {
+							r += "[]";
+							var s = $('<span class="material-bar"></span>');
+							i.append(s).addClass("checkbox")
+						} else {
+							var o = $('<span class="material-title">' + t + "</span>");
+							i.prepend(o)
+						}
+						var u = $('<label for="select-' + e + '"><span>' + t + "</span><strong></strong></label>");
+						var a = $('<input type="checkbox" id="select-' + e + '">');
+						i.prepend(a);
+						i.prepend(u);
+						var f = $('<ul class="' + n + '"></ul>');
+						i.append(f);
+						var l = 0;
+						var c = $(this).children("option").length;
+						var h;
+						$(this).children("option").each(function(e) {
+							var t = $(this).text();
+							var i = $(this).val();
+							var s = $(this).hasAttr("selected");
+							var o = $("<li></li>");
+							f.append(o);
+							var u = $('<label for="' + id + "-" + e + '">' + t + "</label>");
+							var a = $('<input type="' + n + '" value="' + i + '" name="' + r + '" id="' + id + "-" + e + '">');
+							if (s) {
+								h = a.prop("checked", true);
+								l++
+							}
+							o.append(a);
+							o.append(u)
+						});
+						if (s) {
+							var p = l / c * 100;
+							s.width(p + "%")
+						} else {
+							if (l) {
+								u.children("span").text(h.next("label").text());
+								i.addClass("filled")
+							}
+						}
+						$(this).remove()
+					});
+					$(document).on("click", function(e) {
+						if ($(e.target).closest(".material-select").length === 0) {
+							$(".material-select > input").prop("checked", false)
+						}
+					});
+					$(".material-select > input").on("change", function() {
+						var e = $(this).attr("id");
+						$(".material-select > input").each(function() {
+							var t = $(this).attr("id");
+							if (e != t) $(this).prop("checked", false)
+						})
+					});
+					$(".material-select ul input").on("change", function() {
+						if ($(this).closest(".material-select.checkbox").length) {
+							var e = $(this).closest("ul");
+							var t = e.find("input").length;
+							var n = e.find("input:checked").length;
+							var r = n / t * 100;
+							$(this).closest(".material-select").find(".material-bar").width(r + "%")
+						} else {
+							var i = $(this).closest(".material-select");
+							var s = i.children("label").children("span");
+							var o = $(this).next("label");
+							s.text(o.text());
+							i.children("input").prop("checked", false);
+							i.addClass("filled")
+						}
+					})
+				}
+			});
 
-	$('.doResetPassword').click(function () {
-	  var email = $('.onLoggedOut input[type="email"]').val();
-	  
-	  fb.resetPassword({
-		email: email
-	  }, function (err) {
-		if (err) {
-		  alert(err.toString());
-		} else {
-		  alert('Check your email!');
-		}
-	  });
-	});
+			$(function() {
+				$('form.material').materialForm(); // Apply material
+				// $('form').validate({
+				//   errorPlacement: function(error, element) {}
+				// }); // Apply validator with no error messages but classes only
+			});
 
-	$('.doLogout').click(function () {
-	  fb.unauth(function () {
-		// window.location.reload();
-	  });
-	})
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyAXiLCGoFUG-UBPk2S3wyyyIfyxNDakjbo",
+				authDomain: "gifchambeau-67f7b.firebaseapp.com",
+				databaseURL: "https://gifchambeau-67f7b.firebaseio.com",
+				projectId: "gifchambeau-67f7b",
+				storageBucket: "",
+				messagingSenderId: "439998404166"
+			};
+			firebase.initializeApp(config);
 
-	$('.doRegister').click(function () {
-	  var email = $('.onLoggedOut input[type="email"]').val();
-	  var password = $('.onLoggedOut input[type="password"]').val();
+			// var rootRef = fb = firebase.database().ref();
 
-	  fb.createUser({
-		email: email,
-		password: password
-	  }, function (err, userData) {
-		if (err) {
-		  alert(err.toString());
-		} else {
-		  clearForms();
-		  doLogin(email, password, function () {
-			// window.location.reload();
-		  });
-		}
-	  });
-	  
-	  event.preventDefault();
-	});
 
-	$('.onLoggedOut form').submit(function () {
-	  var email = $('.onLoggedOut input[type="email"]').val();
-	  var password = $('.onLoggedOut input[type="password"]').val();
 
-	  doLogin(email, password, function () {
-		// window.location.reload();
-	  });
-	  event.preventDefault();
-	});
 
-	function clearForms () {
-	  $('input[type="text"], input[type="url"]').val('');
-	}
 
-	function saveAuthData (authData) {
-	  $.ajax({
-		method: 'PUT',
-		url: `${FIREBASE_URL}/users/${authData.uid}/profile.json?auth=${authData.token}`,
-		data: JSON.stringify(authData)
-	  });
-	}
 
-	function doLogin (email, password, cb) {
-	  fb.authWithPassword({
-		email: email,
-		password: password
-	  }, function (err, authData) {
-		if (err) {
-		  alert(err.toString());
-		} else {
-		  saveAuthData(authData);
-		  typeof cb === 'function' && cb(authData);
-		}
-	  });
-	}
+			// email = 'test@test.com';
+			// password = 'password';
+			//
+			// var cred = firebase.auth.EmailAuthProvider.credential(
+			// 	email,
+			// 	password
+			// );
 
-	function addPhotoToDom (photo) {
-	  if (photo) {
-		var uuid = Object.keys(photo)[0];
-		$(`<img src="${photo[uuid]}" data-uid="${uuid}">`).appendTo($('.favFotos'));
-	  }
-	}
+			function manualRegister(email, password) {
 
-	fb.onAuth(function (authData) {
-	  if (initLoad) {
-		var onLoggedOut = $('.onLoggedOut');
-		var onLoggedIn = $('.onLoggedIn');
-		var onTempPassword = $('.onTempPassword');
+				firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+					// [END createwithemail]
+					// callSomeFunction(); Optional
+					var user = firebase.auth().currentUser;
+					console.log(user);
+					user.updateProfile({
+						//displayName: 'username'
+					}).then(function() {
+						// Update successful.
+					}, function(error) {
+						// An error happened.
+						console.error(error);
+					});
+				}, function(error) {
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					// [START_EXCLUDE]
+					if (errorCode == 'auth/weak-password') {
+						alert('The password is too weak.');
+					} else {
+						alert(errorMessage);
+						console.error(error);
+					}
+					// [END_EXCLUDE]
+				});
 
-		if (authData && authData.password.isTemporaryPassword) {
-		  // temporary log in
-		  onTempPassword.removeClass('hidden');
-		  onLoggedIn.addClass('hidden');
-		  onLoggedOut.addClass('hidden');
-		} else if (authData) {
-		  // logged in
-		  onLoggedIn.removeClass('hidden');
-		  onLoggedOut.addClass('hidden');
-		  onTempPassword.addClass('hidden');
-		  $('.onLoggedIn h1').text(`Hello ${authData.password.email}`);
-		  
-		  fotos = fb.child(`users/${fb.getAuth().uid}/fotos`);
-		  fotos.on('child_added', function (snapshot) {
-			var obj = {};
-			obj[snapshot.key()] = snapshot.val();
-			addPhotoToDom(obj);
-		  });
-		  
-		} else {
-		  // on logged out
-		  onLoggedOut.removeClass('hidden');
-		  onLoggedIn.addClass('hidden');
-		  onTempPassword.addClass('hidden');
-		}
-	  }
-	  
-	  initLoad = false;
-	});
+				/*
+				firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					if (errorCode == 'auth/weak-password') {
+						alert('The password is too weak.');
+					} else {
+						alert(errorMessage);
+					}
+					console.log(error);
+
+					userId = firebase.auth();
+					console.log( userId );
+					console.log( firebase.User );
+
+					// var updates = {};
+					// updates['/gifcambeau-entries/' + newPostKey] = postData;
+					// //   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+					//
+					// return firebase.database().ref().update(updates);
+
+					// https://stackoverflow.com/questions/41549434/cant-get-list-of-users?noredirect=1&lq=1
+
+					// If registration was successful, `user` is a FIRUser with a uid
+					if(userId) {
+						// exampleDBPath = firebase.database().child("users").child(userId);
+						// Write the user object, for instance a user name or other data, to this path
+						// exampleDBPath.setValue(someJSONAboutTheUser) {
+						// 	//(error, result) in
+						// 	// Now you have a spot to modify your user in the database
+						// }
+					}
+				});
+				*/
+
+				//console.log(error);
+
+				// NOPE but CLOSE
+				// userId = firebase.auth();
+				// console.log( userId );
+				// console.log( firebase.User );
+
+				// NOPE
+				// user = firebase.auth().currentUser;
+				// console.log( user );
+
+
+				// firebase.auth().signOut().then(function() {
+				// 	// Sign-out successful.
+				// 	console.log('Sign-out successful.');
+				// }).catch(function(error) {
+				// 	// An error happened.
+				// 	console.log('An error happened.');
+				// });
+			}
+			// manualRegister();
+			// firebase.auth();
+
+
+
+
+
+
+
+
+
+			// https://codepen.io/pafford14/pen/doOwRX?editors=0010
+			var fotos;
+			var initLoad = true;
+
+			$('.onLoggedIn form').submit(function() {
+				var url = $('.onLoggedIn input[type="url"]').val();
+
+				// fotos.push(url, function(err) {
+				// 	console.log(err);
+				// })
+
+				writeNewPost(user.uid, user.email, 'Post Title', 'Post Body');
+				  $.ajax({
+					  method: 'PUT',
+					  url: `${FIREBASE_URL}/users/${authData.uid}/profile.json?auth=${authData.token}`,
+					  data: JSON.stringify(authData)
+				  });
+
+				event.preventDefault();
+			})
+
+			$('.onTempPassword form').submit(function() {
+				var email = fb.getAuth().password.email;
+				var oldPw = $('.onTempPassword input:nth-child(1)').val();
+				var newPw = $('.onTempPassword input:nth-child(2)').val();
+
+				fb.changePassword({
+					email: email,
+					oldPassword: oldPw,
+					newPassword: newPw
+				}, function(err) {
+					if (err) {
+						alert(err.toString());
+					} else {
+						fb.unauth();
+					}
+				});
+
+				event.preventDefault();
+			})
+
+			$('.doResetPassword').click(function() {
+				var email = $('.onLoggedOut input[type="email"]').val();
+
+				auth.sendPasswordResetEmail(email).then(function() {
+					// Email sent.
+					alert('Check your email!');
+				}).catch(function(error) {
+					// An error happened.
+					alert(error.toString());
+				});
+
+				// fb.resetPassword({
+				// 	email: email
+				// }, function(err) {
+				// 	if (err) {
+				// 		alert(err.toString());
+				// 	} else {
+				// 		alert('Check your email!');
+				// 	}
+				// });
+			});
+
+			$('.doLogout').click(function() {
+				firebase.auth().signOut();
+				// window.location.reload();
+			});
+
+			$('.cancelRegister').click(function() {
+				$('.doLogin').removeClass('hidden');
+				event.preventDefault();
+			});
+
+			$('.showRegister').click(function() {
+				var email = $('.onLoggedOut input[type="email"]').val();
+				var password = $('.onLoggedOut input[type="password"]').val();
+				$('form.login').addClass('hidden');
+				$('form.register').removeClass('hidden');
+
+				event.preventDefault();
+			});
+
+			$('.showLogin').click(function() {
+				$('form.login').removeClass('hidden');
+				$('form.register').addClass('hidden');
+
+				event.preventDefault();
+			});
+
+			$('.doRegister').click(function() {
+				var email = $('form.register input[type="email"]').val();
+				var password = $('form.register input[type="password"]').val();
+				manualRegister(email, password);
+				event.preventDefault();
+			});
+
+			$('.onLoggedOut form').submit(function() {
+				var email = $('.onLoggedOut input[type="email"]').val();
+				var password = $('.onLoggedOut input[type="password"]').val();
+
+				doLogin(email, password, function() {
+					console.log('LOGIN');
+					// window.location.reload();
+				});
+				event.preventDefault();
+			});
+
+			function clearForms() {
+				$('input[type="text"], input[type="url"]').val('');
+			}
+
+			function saveAuthData(authData) {
+				// $.ajax({
+				// 	method: 'PUT',
+				// 	url: `${FIREBASE_URL}/users/${authData.uid}/profile.json?auth=${authData.token}`,
+				// 	data: JSON.stringify(authData)
+				// });
+			}
+
+			function doLogin(email, password, cb) {
+				// console.log(email, password);
+				var cred = firebase.auth.EmailAuthProvider.credential(
+					email,
+					password
+				);
+				firebase.auth().signInAndRetrieveDataWithCredential(cred)
+					.then(function(userCredential) {
+						console.log(userCredential);
+					}, function(err, authData) {
+						if (err) {
+							alert(err.toString());
+						} else {
+							saveAuthData(authData);
+							typeof cb === 'function' && cb(authData);
+						}
+					});
+			}
+
+			// function addPhotoToDom(photo) {
+			// 	if (photo) {
+			// 		var uuid = Object.keys(photo)[0];
+			// 		$(`<img src="${photo[uuid]}" data-uid="${uuid}">`).appendTo($('.favFotos'));
+			// 	}
+			// }
+
+
+
+
+			/*
+			var provider = new firebase.auth.GoogleAuthProvider();
+			provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+			provider.setCustomParameters({
+				'login_hint': 'user@example.com'
+			});
+
+			function googleSignin() {
+				console.log('googleSignin');
+				firebase.auth().signInWithPopup(provider).then(function(result) {
+					console.log('googleSignin Auth');
+					// This gives you a Google Access Token. You can use it to access the Google API.
+					var token = result.credential.accessToken;
+					// The signed-in user info.
+					var user = result.user;
+					// ...
+				}).catch(function(error) {
+					console.log(error);
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					// The email of the user's account used.
+					var email = error.email;
+					// The firebase.auth.AuthCredential type that was used.
+					var credential = error.credential;
+					// ...
+				});
+			}
+			//googleSignin();
+			*/
+
+
+
+
+
+
+
+
+			// var defaultDatabase = firebase.database().ref().child("users");
+			// console.log(defaultDatabase);
+
+
+
+
+
+
+
+
+
+			function writeNewPost(uid, username, title, body) {
+				// A post entry.
+				var postData = {
+					author: username,
+					uid: uid,
+					body: body,
+					topic: title,
+					approved: false,
+				};
+
+				// Get a key for a new Post.
+				var newPostKey = 'gifchambeau-' + firebase.database().ref().child('gifcambeau-entries').push().key;
+
+				// Write the new post's data simultaneously in the posts list and the user's post list.
+				var updates = {};
+				updates['/gifcambeau-entries/' + newPostKey] = postData;
+				//   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+				return firebase.database().ref().update(updates);
+			}
+
+			function updatePost() {
+				// Write the new post's data simultaneously in the posts list and the user's post list.
+				var updates = {};
+				var postData = true;
+				updates['/gifcambeau-entries/gifchambeau--KqLJ4_MDeu9Plm-OP_5/approved'] = postData;
+				// updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+				return firebase.database().ref().update(updates);
+			}
+
+
+
+
+
+
+
+			// var user = firebase.auth().currentUser;
+			// console.log('firebase.auth().currentUser');
+			// if (user) {
+			// 	// User is signed in.
+			// 	console.log('User is signed in.');
+			// } else {
+			// 	// No user is signed in.
+			// 	console.log('User is NOT signed in.');
+			// }
+
+			firebase.auth().onAuthStateChanged(function(user) {
+				console.log('firebase.auth().onAuthStateChanged');
+				if (user) {
+					console.log('User is signed in.');
+					console.log(user);
+					firebase.database().ref('users').once('value').then(function(snapshot) {
+						console.log(snapshot.val());
+					});
+
+					firebase.database().ref('gifcambeau-entries').once('value').then(function(snapshot) {
+						console.log(snapshot.val());
+					});
+
+					// var userId = firebase.auth().user.uid;
+
+
+					$('.onLoggedOut').addClass('hidden');
+					$('.onLoggedIn').removeClass('hidden');
+					// User is signed in.
+					// var displayName = user.displayName;
+					// var email = user.email;
+					// var emailVerified = user.emailVerified;
+					// var photoURL = user.photoURL;
+					// var isAnonymous = user.isAnonymous;
+					// var uid = user.uid;
+					// var providerData = user.providerData;
+
+					// writeNewPost(user.uid, user.email, 'Post Title', 'Post Body');
+					// updatePost();
+
+					function saveAuthData(authData) {
+						console.log('make post');
+						//writeNewPost(user.uid, user.email, 'Post Title', 'Post Body');
+						//   $.ajax({
+						// 	  method: 'PUT',
+						// 	  url: `${FIREBASE_URL}/users/${authData.uid}/profile.json?auth=${authData.token}`,
+						// 	  data: JSON.stringify(authData)
+						//   });
+					}
+					//saveAuthData(user);
+					// User is signed in.
+				} else {
+					console.log('User is NOT signed in.');
+					$('.onLoggedIn').addClass('hidden');
+					$('.onLoggedOut').removeClass('hidden');
+					// No user is signed in.
+				}
+			});
+			// email = 'test@test.com';
+			// password = 'password';
+			// manualRegister(email, password);
+
+			Date.prototype.toDateInputValue = (function() {
+				var local = new Date(this);
+				local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+				return local.toJSON().slice(0, 10);
+			});
+
+			// $(document).ready( function() {
+			$('input[type=date]').val(new Date().toDateInputValue());
+			// });​
+
+
+
+		});
 	</script>
-  </head>
-  <body>
-	  
-  <div class="onLoggedOut hidden">
-    <h1>Login</h1>
-    <form>
-      <input type="email" placeholder="email" required="required"/>
-      <input type="password" placeholder="password" required="required"/>
-      <input class="doRegister" type="button" value="Register"/>
-      <input type="submit" value="Login"/>
-      <input class="doResetPassword" type="button" value="Reset Password"/>
-    </form>
-  </div>
-  <div class="onTempPassword hidden">
-    <h1>Change Password</h1>
-    <form>
-      <input type="password" placeholder="Current Password"/>
-      <input type="password" placeholder="New Password"/>
-      <input type="submit" value="Change Password"/>
-    </form>
-  </div>
-  <div class="onLoggedIn hidden">
-    <h1>Hello</h1>
-    <button class="doLogout">Logout</button>
-    <hr/>
-    <h2>FavoFotos</h2>
-    <form>
-      <input class="url" type="url" placeholder="https://i.imgur.com/abc123"/>
-      <input type="submit" value="Add Foto"/>
-    </form>
-    <hr/>
-    <h2>Photos</h2>
-    <div class="favFotos"></div>
-  </div>
-  </body>
+</head>
+
+<body>
+
+	<div class="onLoggedOut modal hidden">
+		<form class="material login" action="#">
+			<h1>Login</h1>
+			<div class="container">
+				<input class="login-email mdl-textfield__input" type="email" placeholder="email" required="required" />
+				<input class="login-password mdl-textfield__input" type="password" placeholder="password" required="required" />
+				<button class="cancelRegister mdl-textfield__input ghost text hidden" type="button">cancel</button>
+				<button class="doRegister mdl-textfield__input ghost hidden" type="button">Register</button>
+				<button class="doLogin btn" type="submit">Login</button>
+				<!-- <button class="btn doResetPassword" type="button">Reset Password</button> -->
+			</div>
+			<a class="showRegister ghost">Don't have an account? <strong>Register Now</strong></a>
+		</form>
+		<form class="material register hidden" action="#">
+			<h1>Create an account</h1>
+			<div class="container">
+				<input class="register-email mdl-textfield__input" type="email" placeholder="email" required="required" />
+				<input class="register-username mdl-textfield__input" type="username" placeholder="username" required="required" />
+				<input class="register-password mdl-textfield__input" type="password" placeholder="password" required="required" />
+				<button class="cancelRegister mdl-textfield__input ghost text hidden" type="button">cancel</button>
+				<button class="doRegister mdl-textfield__input" type="button">Register Now</button>
+			</div>
+			<a class="showLogin ghost">Already an account? <strong>Login</strong></a>
+		</form>
+		<!-- <form class="material" action="#">
+			<div class="container">
+				<input type="email" placeholder="email" required="required" />
+				<input type="password" placeholder="password" required="required" />
+				<input class="btn doRegister" type="button" value="Register" />
+				<input class="btn" type="submit" value="Login" />
+				<input class="btn doResetPassword" type="button" value="Reset Password" />
+			</div>
+		</form> -->
+	</div>
+	<div class="onTempPassword hidden">
+		<h1>Change Password</h1>
+		<form class="material" action="#">
+			<div class="container">
+				<input type="password" placeholder="Current Password" />
+				<input type="password" placeholder="New Password" />
+				<button class="btn" type="submit" value="Change Password">Change Password</button>
+			</div>
+		</form>
+	</div>
+	<div class="onLoggedIn modal hidden">
+		<h1>Hello</h1>
+		<form class="material" action="#">
+			<div class="container">
+				<input type="date" value="Date" />
+				<input type="text" placeholder="Topic" />
+				<select placeholder="Winner">
+					<option value="" disabled>MAKE USERNAME LIST HERE</option>
+					<!-- <option value="" disabled selected>Select your option</option> -->
+
+					<!--<option value="Bethany Patrick">Bethany</option>
+					<option value="Chris Chambers">Chris</option>
+					<option value="Cyndi Masters">Cyndi</option>
+					<option value="Emily Clark">Emily</option>
+					<option value="Hal Burgiss">Hal</option>
+					<option value="Harold Bradley III">Harold</option>
+					<option value="Jan">Jan</option>
+					<option value="Katie Martin">Katie</option>
+					<option value="Lance Humbert">Lance</option>
+					<option value="Mark Shelton">Mark</option>
+					<option value="Michelle Fereday">Michelle</option>
+					<option value="Rachel Harbrecht">Rachel</option>
+					<option value="Scott Dukes">Scott</option>
+					<option value="Stacy Robertson">Stacy</option>
+					<option value="Tyler Akin">Tyler</option>-->
+				</select>
+				<input type="votes" placeholder="Votes" />
+				<input type="text" placeholder="Winning Text" />
+				<button class="btn" type="submit" value="Submit" />Submit</button>
+			</div>
+		</form>
+	</div>
+	<button class="btn doLogout onLoggedIn hidden">Logout</button>
+</body>
+
 </html>
